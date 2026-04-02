@@ -49,7 +49,7 @@ export const experiences = [
     id: 1,
     company: "Kcube.ai",
     position: "Software Engineer",
-    duration: "2020 - Present",
+    duration: "2022 - Present",
     location: "Lahore, Pakistan",
     description: [
       "Developed and maintained scalable web applications using React.js and Angular, serving thousands of active users",

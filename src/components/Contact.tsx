@@ -19,21 +19,32 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // For now, just simulate form submission
-    // Later, connect to Formspree or your own backend
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    try {
+      // Send to Formspree
+      const response = await fetch("https://formspree.io/f/mdaplwqq", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
 
-    // Open mailto link as fallback
-    const mailtoLink = `mailto:${personalInfo.email}?subject=${encodeURIComponent(
-      formData.subject
-    )}&body=${encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
-    )}`;
-    window.location.href = mailtoLink;
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        alert("Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      alert("Failed to send message. Please try again.");
+    }
 
     setIsSubmitting(false);
-    setSubmitted(true);
-    setFormData({ name: "", email: "", subject: "", message: "" });
   };
 
   const contactInfo = [
