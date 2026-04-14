@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaPaperPlane,
+} from "react-icons/fa";
 import { personalInfo } from "@/data/portfolio";
 
 export default function Contact() {
@@ -20,18 +25,10 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // Send to Formspree
       const response = await fetch("https://formspree.io/f/mdaplwqq", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
@@ -40,7 +37,7 @@ export default function Contact() {
       } else {
         alert("Failed to send message. Please try again.");
       }
-    } catch (error) {
+    } catch {
       alert("Failed to send message. Please try again.");
     }
 
@@ -53,24 +50,30 @@ export default function Contact() {
       label: "Email",
       value: personalInfo.email,
       href: `mailto:${personalInfo.email}`,
+      color: "text-blue-400",
+      bg: "bg-blue-500/10 border-blue-500/20",
     },
     {
       icon: FaPhone,
       label: "Phone",
       value: personalInfo.phone,
       href: `tel:${personalInfo.phone}`,
+      color: "text-emerald-400",
+      bg: "bg-emerald-500/10 border-emerald-500/20",
     },
     {
       icon: FaMapMarkerAlt,
       label: "Location",
       value: personalInfo.location,
       href: "#",
+      color: "text-amber-400",
+      bg: "bg-amber-500/10 border-amber-500/20",
     },
   ];
 
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-24 bg-[#0f1117] relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -78,44 +81,52 @@ export default function Contact() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <p className="text-blue-400 text-sm font-medium tracking-wider uppercase mb-3">
+            Contact
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Get In Touch
           </h2>
-          <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Have a project in mind or want to discuss an opportunity? Feel free to reach out!
+          <div className="w-12 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mb-4" />
+          <p className="text-gray-500 max-w-xl mx-auto">
+            Have a project in mind or want to discuss an opportunity? Let&apos;s
+            connect.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact Info */}
+        <div className="grid lg:grid-cols-5 gap-12">
+          {/* Left - Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            className="lg:col-span-2"
           >
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-              Let's talk about your project
+            <h3 className="text-xl font-bold text-white mb-6">
+              Let&apos;s build something great together
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-8">
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+            <p className="text-gray-500 mb-8 leading-relaxed">
+              I&apos;m always open to discussing new projects, creative ideas,
+              or opportunities to be part of your vision.
             </p>
 
-            <div className="space-y-6">
+            <div className="space-y-4">
               {contactInfo.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
-                  className="flex items-center gap-4 group"
+                  className="flex items-center gap-4 group p-3 rounded-xl hover:bg-white/[0.02] transition-all duration-300"
                 >
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center group-hover:bg-blue-600 transition-colors">
-                    <item.icon className="text-blue-600 group-hover:text-white text-xl transition-colors" />
+                  <div
+                    className={`w-11 h-11 ${item.bg} border rounded-lg flex items-center justify-center transition-colors`}
+                  >
+                    <item.icon className={`${item.color} text-lg`} />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-xs text-gray-600 uppercase tracking-wider">
                       {item.label}
                     </p>
-                    <p className="font-medium text-gray-900 dark:text-white">
+                    <p className="text-gray-300 text-sm font-medium">
                       {item.value}
                     </p>
                   </div>
@@ -124,17 +135,21 @@ export default function Contact() {
             </div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Right - Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            className="lg:col-span-3"
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
+            <form
+              onSubmit={handleSubmit}
+              className="bg-[#151921] border border-[#232838] rounded-xl p-8 space-y-5"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Your Name
+                  <label className="block text-xs text-gray-500 uppercase tracking-wider mb-2">
+                    Name
                   </label>
                   <input
                     type="text"
@@ -143,13 +158,13 @@ export default function Contact() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                    placeholder="John Doe"
+                    className="w-full px-4 py-3 rounded-lg bg-[#0f1117] border border-[#232838] text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
+                    placeholder="Your name"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Your Email
+                  <label className="block text-xs text-gray-500 uppercase tracking-wider mb-2">
+                    Email
                   </label>
                   <input
                     type="email"
@@ -158,14 +173,14 @@ export default function Contact() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                    placeholder="john@example.com"
+                    className="w-full px-4 py-3 rounded-lg bg-[#0f1117] border border-[#232838] text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
+                    placeholder="your@email.com"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-xs text-gray-500 uppercase tracking-wider mb-2">
                   Subject
                 </label>
                 <input
@@ -175,13 +190,13 @@ export default function Contact() {
                   onChange={(e) =>
                     setFormData({ ...formData, subject: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
-                  placeholder="Project Discussion"
+                  className="w-full px-4 py-3 rounded-lg bg-[#0f1117] border border-[#232838] text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
+                  placeholder="Project discussion"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-xs text-gray-500 uppercase tracking-wider mb-2">
                   Message
                 </label>
                 <textarea
@@ -191,7 +206,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all resize-none"
+                  className="w-full px-4 py-3 rounded-lg bg-[#0f1117] border border-[#232838] text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all resize-none text-sm"
                   placeholder="Tell me about your project..."
                 />
               </div>
@@ -199,7 +214,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-3.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-500 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 {isSubmitting ? (
                   "Sending..."
@@ -212,9 +227,13 @@ export default function Contact() {
               </button>
 
               {submitted && (
-                <p className="text-green-600 text-center">
-                  Thank you! Your message has been sent.
-                </p>
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-emerald-400 text-center text-sm"
+                >
+                  Message sent successfully! I&apos;ll get back to you soon.
+                </motion.p>
               )}
             </form>
           </motion.div>

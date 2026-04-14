@@ -6,8 +6,8 @@ import { experiences } from "@/data/portfolio";
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-20 bg-white dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="experience" className="py-24 bg-[#0f1117] relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -15,71 +15,62 @@ export default function Experience() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <p className="text-blue-400 text-sm font-medium tracking-wider uppercase mb-3">
+            Career
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Work Experience
           </h2>
-          <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            My professional journey and the companies I've worked with
-          </p>
+          <div className="w-12 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto" />
         </motion.div>
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Timeline Line */}
-          <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-blue-200 dark:bg-blue-900"></div>
-
-          {/* Experience Cards */}
+        {/* Experience Cards */}
+        <div className="max-w-4xl mx-auto space-y-8">
           {experiences.map((exp, index) => (
             <motion.div
               key={exp.id}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.2 }}
-              className={`relative flex flex-col md:flex-row items-center mb-12 ${
-                index % 2 === 0 ? "md:flex-row-reverse" : ""
-              }`}
+              transition={{ delay: index * 0.1 }}
+              className="relative"
             >
-              {/* Timeline Dot */}
-              <div className="absolute left-0 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-600 rounded-full border-4 border-white dark:border-gray-900 z-10"></div>
-
-              {/* Content */}
-              <div
-                className={`w-full md:w-1/2 ${
-                  index % 2 === 0 ? "md:pl-12" : "md:pr-12"
-                } pl-8 md:pl-0`}
-              >
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-lg transition-all"
-                >
-                  <div className="flex items-center gap-2 text-blue-600 mb-2">
-                    <FaBriefcase />
-                    <span className="font-semibold">{exp.duration}</span>
+              {/* Card */}
+              <div className="bg-[#151921] border border-[#232838] rounded-xl p-8 hover:border-blue-500/20 transition-all duration-300">
+                {/* Header */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6">
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-1">
+                      {exp.position}
+                    </h3>
+                    <div className="flex flex-wrap items-center gap-3 text-sm">
+                      <span className="text-blue-400 font-medium">
+                        {exp.company}
+                      </span>
+                      <span className="text-gray-700">|</span>
+                      <span className="flex items-center gap-1 text-gray-500">
+                        <FaMapMarkerAlt className="text-xs" />
+                        {exp.location}
+                      </span>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-                    {exp.position}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-2 flex items-center gap-2">
-                    {exp.company}
-                    <span className="flex items-center gap-1 text-sm">
-                      <FaMapMarkerAlt className="text-gray-400" />
-                      {exp.location}
-                    </span>
-                  </p>
-                  <ul className="space-y-2">
-                    {exp.description.map((item, i) => (
-                      <li
-                        key={i}
-                        className="text-gray-600 dark:text-gray-400 text-sm flex items-start gap-2"
-                      >
-                        <span className="text-blue-600 mt-1">•</span>
+                  <div className="mt-3 sm:mt-0 inline-flex items-center gap-2 px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-lg text-sm text-blue-400">
+                    <FaBriefcase className="text-xs" />
+                    {exp.duration}
+                  </div>
+                </div>
+
+                {/* Description */}
+                <ul className="space-y-3">
+                  {exp.description.map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                      <span className="text-gray-400 text-sm leading-relaxed">
                         {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </motion.div>
           ))}

@@ -9,8 +9,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Ejaz Ashraf | Software Engineer",
-  description: "Senior Software Engineer with 5+ years of experience in React, React Native, Angular, and FastAPI. Building modern web and mobile applications.",
-  keywords: ["Software Engineer", "React", "React Native", "Angular", "FastAPI", "Web Developer", "Mobile Developer"],
+  description: "Software Engineer with 4+ years of experience building enterprise web and mobile applications. Specializing in React, Angular, TypeScript, and FastAPI.",
+  keywords: ["Software Engineer", "React", "Angular", "TypeScript", "FastAPI", "Frontend Developer", "Full-Stack Developer"],
   authors: [{ name: "Ejaz Ashraf" }],
 };
 
