@@ -7,6 +7,9 @@ import { experiences } from "@/data/portfolio";
 export default function Experience() {
   return (
     <section id="experience" className="py-24 bg-[#0f1117] relative">
+      {/* Section divider */}
+      <div className="absolute top-0 left-0 right-0 section-divider" />
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -32,11 +35,19 @@ export default function Experience() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.1, duration: 0.6 }}
               className="relative"
             >
+              {/* Timeline dot */}
+              <div className="absolute -left-8 top-10 hidden lg:block">
+                <div className="w-3 h-3 bg-blue-500 rounded-full ring-4 ring-blue-500/20" />
+              </div>
+
               {/* Card */}
-              <div className="bg-[#151921] border border-[#232838] rounded-xl p-8 hover:border-blue-500/20 transition-all duration-300">
+              <motion.div
+                whileHover={{ y: -2 }}
+                className="bg-[#151921] border border-[#232838] rounded-xl p-8 hover:border-blue-500/20 transition-all duration-300 card-glow"
+              >
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6">
                   <div>
@@ -63,15 +74,22 @@ export default function Experience() {
                 {/* Description */}
                 <ul className="space-y-3">
                   {exp.description.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
+                    <motion.li
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 + i * 0.08 }}
+                      className="flex items-start gap-3"
+                    >
                       <span className="mt-2 w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
                       <span className="text-gray-400 text-sm leading-relaxed">
                         {item}
                       </span>
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             </motion.div>
           ))}
         </div>

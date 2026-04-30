@@ -7,6 +7,7 @@ import {
   FaPhone,
   FaMapMarkerAlt,
   FaPaperPlane,
+  FaCheckCircle,
 } from "react-icons/fa";
 import { personalInfo } from "@/data/portfolio";
 
@@ -52,6 +53,7 @@ export default function Contact() {
       href: `mailto:${personalInfo.email}`,
       color: "text-blue-400",
       bg: "bg-blue-500/10 border-blue-500/20",
+      hoverBg: "group-hover:bg-blue-500/20",
     },
     {
       icon: FaPhone,
@@ -60,6 +62,7 @@ export default function Contact() {
       href: `tel:${personalInfo.phone}`,
       color: "text-emerald-400",
       bg: "bg-emerald-500/10 border-emerald-500/20",
+      hoverBg: "group-hover:bg-emerald-500/20",
     },
     {
       icon: FaMapMarkerAlt,
@@ -68,11 +71,15 @@ export default function Contact() {
       href: "#",
       color: "text-amber-400",
       bg: "bg-amber-500/10 border-amber-500/20",
+      hoverBg: "group-hover:bg-amber-500/20",
     },
   ];
 
   return (
     <section id="contact" className="py-24 bg-[#0f1117] relative">
+      {/* Section divider */}
+      <div className="absolute top-0 left-0 right-0 section-divider" />
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <motion.div
@@ -100,6 +107,7 @@ export default function Contact() {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="lg:col-span-2"
           >
             <h3 className="text-xl font-bold text-white mb-6">
@@ -110,15 +118,20 @@ export default function Contact() {
               or opportunities to be part of your vision.
             </p>
 
-            <div className="space-y-4">
-              {contactInfo.map((item) => (
-                <a
+            <div className="space-y-3">
+              {contactInfo.map((item, index) => (
+                <motion.a
                   key={item.label}
                   href={item.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + index * 0.1 }}
+                  whileHover={{ x: 4 }}
                   className="flex items-center gap-4 group p-3 rounded-xl hover:bg-white/[0.02] transition-all duration-300"
                 >
                   <div
-                    className={`w-11 h-11 ${item.bg} border rounded-lg flex items-center justify-center transition-colors`}
+                    className={`w-11 h-11 ${item.bg} ${item.hoverBg} border rounded-lg flex items-center justify-center transition-all duration-300`}
                   >
                     <item.icon className={`${item.color} text-lg`} />
                   </div>
@@ -126,11 +139,11 @@ export default function Contact() {
                     <p className="text-xs text-gray-600 uppercase tracking-wider">
                       {item.label}
                     </p>
-                    <p className="text-gray-300 text-sm font-medium">
+                    <p className="text-gray-300 text-sm font-medium group-hover:text-white transition-colors">
                       {item.value}
                     </p>
                   </div>
-                </a>
+                </motion.a>
               ))}
             </div>
           </motion.div>
@@ -140,11 +153,12 @@ export default function Contact() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="lg:col-span-3"
           >
             <form
               onSubmit={handleSubmit}
-              className="bg-[#151921] border border-[#232838] rounded-xl p-8 space-y-5"
+              className="bg-[#151921] border border-[#232838] rounded-xl p-8 space-y-5 card-glow"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -211,29 +225,38 @@ export default function Contact() {
                 />
               </div>
 
-              <button
+              <motion.button
                 type="submit"
                 disabled={isSubmitting}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
                 className="w-full py-3.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-500 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 {isSubmitting ? (
-                  "Sending..."
+                  <span className="flex items-center gap-2">
+                    <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    Sending...
+                  </span>
                 ) : (
                   <>
                     <FaPaperPlane />
                     Send Message
                   </>
                 )}
-              </button>
+              </motion.button>
 
               {submitted && (
-                <motion.p
+                <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-emerald-400 text-center text-sm"
+                  className="flex items-center justify-center gap-2 text-emerald-400 text-sm py-2"
                 >
+                  <FaCheckCircle />
                   Message sent successfully! I&apos;ll get back to you soon.
-                </motion.p>
+                </motion.div>
               )}
             </form>
           </motion.div>

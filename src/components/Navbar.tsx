@@ -17,9 +17,22 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+
+      // Detect active section
+      const sections = navLinks.map((link) => link.href.replace("#", ""));
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && el.getBoundingClientRect().top <= 150) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -28,9 +41,10 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-[#0f1117]/80 backdrop-blur-xl border-b border-[#232838]"
+          ? "bg-[#0f1117]/80 backdrop-blur-xl border-b border-[#232838] shadow-lg shadow-black/10"
           : "bg-transparent"
       }`}
     >
@@ -52,28 +66,42 @@ export default function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors duration-300 rounded-lg hover:bg-white/5"
+                className={`relative px-4 py-2 text-sm transition-colors duration-300 rounded-lg ${
+                  activeSection === link.href.replace("#", "")
+                    ? "text-white"
+                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                }`}
               >
                 {link.name}
+                {activeSection === link.href.replace("#", "") && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-blue-500 rounded-full"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
               </a>
             ))}
-            <a
+            <motion.a
               href={personalInfo.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-4 px-5 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-all duration-300"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="ml-4 px-5 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition-all duration-300 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]"
             >
               Resume
-            </a>
+            </motion.a>
           </div>
 
           {/* Mobile Menu Button */}
-          <button
+          <motion.button
             onClick={() => setIsOpen(!isOpen)}
+            whileTap={{ scale: 0.9 }}
             className="md:hidden text-gray-400 hover:text-white transition-colors"
           >
             {isOpen ? <HiX size={24} /> : <HiMenu size={24} />}
-          </button>
+          </motion.button>
         </div>
 
         {/* Mobile Nav */}
@@ -83,27 +111,38 @@ export default function Navbar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
               className="md:hidden overflow-hidden"
             >
-              <div className="bg-[#151921] border border-[#232838] rounded-xl mt-2 p-2 mb-4">
-                {navLinks.map((link) => (
-                  <a
+              <div className="bg-[#151921] border border-[#232838] rounded-xl mt-2 p-2 mb-4 shadow-xl shadow-black/20">
+                {navLinks.map((link, index) => (
+                  <motion.a
                     key={link.name}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                    className={`block px-4 py-3 rounded-lg transition-colors ${
+                      activeSection === link.href.replace("#", "")
+                        ? "text-white bg-blue-500/10"
+                        : "text-gray-400 hover:text-white hover:bg-white/5"
+                    }`}
                   >
                     {link.name}
-                  </a>
+                  </motion.a>
                 ))}
-                <a
+                <motion.a
                   href={personalInfo.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block mt-2 px-4 py-3 bg-blue-600 text-white text-center rounded-lg"
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: navLinks.length * 0.05 }}
+                  className="block mt-2 px-4 py-3 bg-blue-600 text-white text-center rounded-lg hover:bg-blue-500 transition-colors"
                 >
                   Resume
-                </a>
+                </motion.a>
               </div>
             </motion.div>
           )}
