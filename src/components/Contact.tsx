@@ -6,6 +6,9 @@ import {
   FaEnvelope,
   FaPhone,
   FaMapMarkerAlt,
+  FaWhatsapp,
+  FaGithub,
+  FaLinkedin,
   FaPaperPlane,
   FaCheckCircle,
 } from "react-icons/fa";
@@ -73,6 +76,33 @@ export default function Contact() {
       bg: "bg-amber-500/10 border-amber-500/20",
       hoverBg: "group-hover:bg-amber-500/20",
     },
+    {
+      icon: FaWhatsapp,
+      label: "WhatsApp",
+      value: "Chat on WhatsApp",
+      href: `https://wa.me/${personalInfo.phone.replace(/\D/g, "")}`,
+      color: "text-green-400",
+      bg: "bg-green-500/10 border-green-500/20",
+      hoverBg: "group-hover:bg-green-500/20",
+    },
+    {
+      icon: FaGithub,
+      label: "GitHub",
+      value: "@Ejazashraftriplek",
+      href: personalInfo.social.github,
+      color: "text-gray-300",
+      bg: "bg-gray-500/10 border-gray-500/20",
+      hoverBg: "group-hover:bg-gray-500/20",
+    },
+    {
+      icon: FaLinkedin,
+      label: "LinkedIn",
+      value: "in/ejazashraf",
+      href: personalInfo.social.linkedin,
+      color: "text-blue-400",
+      bg: "bg-blue-500/10 border-blue-500/20",
+      hoverBg: "group-hover:bg-blue-500/20",
+    },
   ];
 
   return (
@@ -119,10 +149,14 @@ export default function Contact() {
             </p>
 
             <div className="space-y-3">
-              {contactInfo.map((item, index) => (
+              {contactInfo.map((item, index) => {
+                const isExternal = item.href.startsWith("http");
+                return (
                 <motion.a
                   key={item.label}
                   href={item.href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -144,7 +178,8 @@ export default function Contact() {
                     </p>
                   </div>
                 </motion.a>
-              ))}
+                );
+              })}
             </div>
           </motion.div>
 

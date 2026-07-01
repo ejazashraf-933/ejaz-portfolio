@@ -1,51 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FaCode, FaMobile, FaServer, FaDatabase } from "react-icons/fa";
+import Image from "next/image";
+import { FaBriefcase } from "react-icons/fa";
 import { personalInfo } from "@/data/portfolio";
-
-const services = [
-  {
-    icon: FaCode,
-    title: "Web Development",
-    description:
-      "Scalable web applications with React, Angular, Next.js, and TypeScript",
-    gradient: "from-blue-500/10 to-cyan-500/10",
-    border: "hover:border-blue-500/30",
-    iconColor: "text-blue-400",
-    iconBg: "bg-blue-500/10",
-  },
-  {
-    icon: FaMobile,
-    title: "Mobile Development",
-    description:
-      "Cross-platform mobile apps with React Native and Expo for iOS & Android",
-    gradient: "from-purple-500/10 to-pink-500/10",
-    border: "hover:border-purple-500/30",
-    iconColor: "text-purple-400",
-    iconBg: "bg-purple-500/10",
-  },
-  {
-    icon: FaServer,
-    title: "Backend Development",
-    description:
-      "Robust APIs and services with FastAPI, Python, and Node.js",
-    gradient: "from-emerald-500/10 to-teal-500/10",
-    border: "hover:border-emerald-500/30",
-    iconColor: "text-emerald-400",
-    iconBg: "bg-emerald-500/10",
-  },
-  {
-    icon: FaDatabase,
-    title: "Database & Cloud",
-    description:
-      "Database design with PostgreSQL, cloud infrastructure on Azure and AWS",
-    gradient: "from-amber-500/10 to-orange-500/10",
-    border: "hover:border-amber-500/30",
-    iconColor: "text-amber-400",
-    iconBg: "bg-amber-500/10",
-  },
-];
 
 export default function About() {
   return (
@@ -70,7 +28,7 @@ export default function About() {
           <div className="w-12 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto" />
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left - About Text */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -82,8 +40,8 @@ export default function About() {
               {personalInfo.bio}
             </p>
             <p className="text-gray-500 mb-8 leading-relaxed">
-              I love turning complex problems into simple, elegant solutions.
-              My focus is on writing clean, maintainable code and delivering
+              I love turning complex problems into simple, elegant solutions. My
+              focus is on writing clean, maintainable code and delivering
               products that make a real impact.
             </p>
 
@@ -102,42 +60,54 @@ export default function About() {
                   transition={{ delay: 0.2 + index * 0.1 }}
                   className="group"
                 >
-                  <p className="text-gray-600 text-sm mb-1 group-hover:text-blue-400 transition-colors duration-300">{item.label}</p>
-                  <p className="font-medium text-gray-300 text-sm">{item.value}</p>
+                  <p className="text-gray-600 text-sm mb-1 group-hover:text-blue-400 transition-colors duration-300">
+                    {item.label}
+                  </p>
+                  <p className="font-medium text-gray-300 text-sm break-words">
+                    {item.value}
+                  </p>
                 </motion.div>
               ))}
             </div>
           </motion.div>
 
-          {/* Right - Services */}
+          {/* Right - Profile Photo */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="grid grid-cols-2 gap-4"
+            className="relative"
           >
-            {services.map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className={`bg-gradient-to-br ${service.gradient} border border-[#232838] ${service.border} p-6 rounded-xl transition-all duration-300 card-glow cursor-default`}
-              >
-                <div className={`w-10 h-10 ${service.iconBg} rounded-lg flex items-center justify-center mb-4`}>
-                  <service.icon className={`${service.iconColor} text-lg`} />
+            {/* Glow */}
+            <div className="absolute -inset-4 bg-gradient-to-tr from-blue-500/20 to-cyan-500/10 rounded-3xl blur-2xl opacity-60" />
+
+            <div className="relative aspect-[4/5] max-w-sm mx-auto rounded-2xl overflow-hidden border border-[#232838]">
+              <Image
+                src="/profile.jpeg"
+                alt={personalInfo.name}
+                fill
+                sizes="(max-width: 1024px) 100vw, 400px"
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0f1117] via-transparent to-transparent" />
+
+              {/* Floating info card */}
+              <div className="absolute bottom-4 left-4 right-4 flex items-center gap-3 bg-[#0f1117]/70 backdrop-blur-md border border-white/10 rounded-xl px-4 py-3">
+                <div className="w-10 h-10 rounded-lg bg-blue-500/15 flex items-center justify-center shrink-0">
+                  <FaBriefcase className="text-blue-400" />
                 </div>
-                <h4 className="font-semibold text-white mb-2 text-sm">
-                  {service.title}
-                </h4>
-                <p className="text-xs text-gray-500 leading-relaxed">
-                  {service.description}
-                </p>
-              </motion.div>
-            ))}
+                <div className="min-w-0">
+                  <p className="text-white text-sm font-semibold truncate">
+                    {personalInfo.title}
+                  </p>
+                  <p className="text-gray-400 text-xs truncate">
+                    Kcube.ai · {personalInfo.location}
+                  </p>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>

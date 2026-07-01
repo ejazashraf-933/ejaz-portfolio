@@ -7,8 +7,8 @@ export const personalInfo = {
   email: "ejazashraf933@gmail.com",
   phone: "+923418973933",
   location: "Lahore, Pakistan",
-  bio: "Software Engineer with 4+ years of experience building enterprise web and mobile applications at Kcube.ai. Shipped workforce management portals, an AI-powered memory platform, and a legal case management SaaS — serving thousands of users across Australia and beyond.",
-  resumeUrl: "/ejaz-ashraf.pdf",
+  bio: "Full-Stack Software Engineer with 4+ years of experience building enterprise web and mobile applications at Kcube.ai. Shipped workforce management portals, an event-management operations platform, an AI-powered memory app, and a legal case-management SaaS — serving thousands of users across Australia and beyond.",
+  resumeUrl: "/resume.pdf",
   social: {
     github: "https://github.com/Ejazashraftriplek",
     linkedin: "https://www.linkedin.com/in/ejazashraf/",
@@ -16,7 +16,7 @@ export const personalInfo = {
   stats: [
     { label: "Years Experience", value: "4+" },
     { label: "Products Shipped", value: "7" },
-    { label: "Happy Clients", value: "10+" },
+    { label: "Users Reached", value: "1000s" },
     { label: "Awards Won", value: "2x" },
   ],
 };
@@ -68,7 +68,8 @@ export const experiences = [
     duration: "Jan 2022 - Present",
     location: "Lahore, Pakistan",
     description: [
-      "Built and shipped 4 production applications (ALA Web Portal, ALA Mobile App, CoreMemories AI, APR System) across web and mobile platforms using Angular, React, and React Native",
+      "Built and shipped 7 production web & mobile applications (ALA Web Portal, ALA Mobile App, Hailo Platform, CoreMemories AI, APR System, Heides Patient Portal, Image Upscaler) using Angular, React, Next.js, React Native, NestJS, and FastAPI",
+      "Built backend services with NestJS and FastAPI on PostgreSQL — REST and real-time WebSocket APIs with role-based access control and JWT/OAuth 2.0 authentication",
       "Developed reusable component libraries following atomic design principles, reducing feature development time by 30%",
       "Optimized application performance through code splitting, lazy loading, and bundle optimization, cutting initial load time by 50%",
       "Implemented secure authentication and authorization flows using Azure B2C and OAuth 2.0 with role-based access control",
@@ -105,6 +106,32 @@ export const projects = [
       "Architected modular Angular web portal and React Native mobile app for candidate management, payroll, job tracking, and compliance workflows",
       "Integrated DocuSign API and Azure Blob Storage for end-to-end digital document workflows — signature collection, secure storage, and versioning",
       "Published mobile app on both Google Play Store and Apple App Store with 95%+ crash-free sessions",
+    ],
+  },
+  {
+    id: 8,
+    title: "Hailo — Event Management Platform",
+    client: "Kcube.ai",
+    description:
+      "Enterprise SaaS that streamlines end-to-end event operations — projects, teams, finance, procurement, HR/leave, and payroll — with real-time collaboration across multi-country teams.",
+    image: "",
+    technologies: [
+      "React",
+      "NestJS",
+      "TypeScript",
+      "PostgreSQL",
+      "TypeORM",
+      "Socket.IO",
+      "Redis",
+      "BullMQ",
+      "Azure MSAL",
+      "AWS",
+    ],
+    featured: true,
+    highlights: [
+      "Built the NestJS + TypeORM + PostgreSQL backend with granular role-based access control (RBAC), JWT auth, and two-factor authentication (TOTP)",
+      "Implemented real-time notifications and presence with Socket.IO + Redis, and background jobs (email, digests, exports) via BullMQ",
+      "Developed the React 18 + Vite frontend with Azure MSAL + Google login, TanStack Query, i18next multi-language, and Sentry monitoring",
     ],
   },
   {
@@ -262,10 +289,8 @@ export const education = [
   {
     id: 1,
     degree: "Bachelor of Science in Software Engineering (BSSE)",
-    institution: "University of Azad Jammu & Kashmir MZD",
-    duration: "2015 - 2019",
+    institution: "University of Azad Jammu & Kashmir",
     location: "Muzaffarabad, Azad Kashmir",
-    gpa: "3.1 / 4.0",
   },
 ];
 
