@@ -88,7 +88,7 @@ export default function Contact() {
     {
       icon: FaGithub,
       label: "GitHub",
-      value: "@Ejazashraftriplek",
+      value: "@ejazashraf-933",
       href: personalInfo.social.github,
       color: "text-gray-300",
       bg: "bg-gray-500/10 border-gray-500/20",

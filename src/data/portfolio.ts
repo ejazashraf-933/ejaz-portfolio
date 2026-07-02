@@ -10,7 +10,7 @@ export const personalInfo = {
   bio: "Full-Stack Software Engineer with 4+ years of experience building enterprise web and mobile applications at Kcube.ai. Shipped workforce management portals, an event-management operations platform, an AI-powered memory app, and a legal case-management SaaS — serving thousands of users across Australia and beyond.",
   resumeUrl: "/resume.pdf",
   social: {
-    github: "https://github.com/Ejazashraftriplek",
+    github: "https://github.com/ejazashraf-933",
     linkedin: "https://www.linkedin.com/in/ejazashraf/",
   },
   stats: [
