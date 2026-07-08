@@ -6,7 +6,7 @@ import { experiences } from "@/data/portfolio";
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-24 bg-[#0f1117] relative">
+    <section id="experience" className="py-24 relative">
       {/* Section divider */}
       <div className="absolute top-0 left-0 right-0 section-divider" />
 
@@ -46,7 +46,7 @@ export default function Experience() {
               {/* Card */}
               <motion.div
                 whileHover={{ y: -2 }}
-                className="bg-[#151921] border border-[#232838] rounded-xl p-8 hover:border-blue-500/20 transition-all duration-300 card-glow"
+                className="glass border border-white/10 rounded-2xl p-8 hover:border-blue-500/30 transition-all duration-300 card-glow"
               >
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6">

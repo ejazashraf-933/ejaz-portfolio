@@ -297,9 +297,20 @@ export const education = [
 export const awards = [
   {
     id: 1,
-    title: "Employee of the Quarter (2x)",
-    organization: "Kcube AI",
+    title: "Employee of the Quarter",
+    organization: "Kcube.ai",
+    period: "Q2 2025",
+    image: "/award-2.jpg",
     description:
-      "Recognized twice for delivering high-impact projects and technical leadership across cross-functional teams",
+      "Recognized for delivering high-impact projects across cross-functional teams.",
+  },
+  {
+    id: 2,
+    title: "Employee of the Quarter",
+    organization: "Triple K Technologies",
+    period: "Q3 2022",
+    image: "/award-1.jpg",
+    description:
+      "Recognized for strong technical contributions and consistent delivery.",
   },
 ];

@@ -48,7 +48,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 bg-[#131620] relative">
+    <section id="services" className="py-24 relative">
       {/* Section divider */}
       <div className="absolute top-0 left-0 right-0 section-divider" />
 
@@ -83,7 +83,7 @@ export default function Services() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               whileHover={{ y: -6 }}
-              className={`bg-gradient-to-br ${service.gradient} border border-[#232838] ${service.border} p-7 rounded-2xl transition-all duration-300 card-glow cursor-default`}
+              className={`bg-gradient-to-br ${service.gradient} border border-white/10 ${service.border} p-7 rounded-2xl backdrop-blur-sm transition-all duration-300 card-glow cursor-default`}
             >
               <div
                 className={`w-12 h-12 ${service.iconBg} rounded-xl flex items-center justify-center mb-5`}

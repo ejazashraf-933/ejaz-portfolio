@@ -106,7 +106,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-24 bg-[#0f1117] relative">
+    <section id="contact" className="py-24 relative">
       {/* Section divider */}
       <div className="absolute top-0 left-0 right-0 section-divider" />
 
@@ -193,7 +193,7 @@ export default function Contact() {
           >
             <form
               onSubmit={handleSubmit}
-              className="bg-[#151921] border border-[#232838] rounded-xl p-8 space-y-5 card-glow"
+              className="glass border border-white/10 rounded-2xl p-8 space-y-5 card-glow"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -207,7 +207,7 @@ export default function Contact() {
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-lg bg-[#0f1117] border border-[#232838] text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
+                    className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
                     placeholder="Your name"
                   />
                 </div>
@@ -222,7 +222,7 @@ export default function Contact() {
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
-                    className="w-full px-4 py-3 rounded-lg bg-[#0f1117] border border-[#232838] text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
+                    className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
                     placeholder="your@email.com"
                   />
                 </div>
@@ -239,7 +239,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setFormData({ ...formData, subject: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-lg bg-[#0f1117] border border-[#232838] text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
+                  className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
                   placeholder="Project discussion"
                 />
               </div>
@@ -255,7 +255,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  className="w-full px-4 py-3 rounded-lg bg-[#0f1117] border border-[#232838] text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all resize-none text-sm"
+                  className="w-full px-4 py-3 rounded-lg bg-black/20 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all resize-none text-sm"
                   placeholder="Tell me about your project..."
                 />
               </div>

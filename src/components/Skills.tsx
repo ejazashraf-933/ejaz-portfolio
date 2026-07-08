@@ -34,7 +34,7 @@ export default function Skills() {
   const categories = [...new Set(skills.map((skill) => skill.category))];
 
   return (
-    <section id="skills" className="py-24 bg-[#131620] relative">
+    <section id="skills" className="py-24 relative">
       {/* Section divider */}
       <div className="absolute top-0 left-0 right-0 section-divider" />
 
@@ -87,7 +87,7 @@ export default function Skills() {
                       whileHover={{ scale: 1.05, y: -3 }}
                       className={`relative border ${
                         categoryBg[category] || "bg-white/5 border-white/10"
-                      } rounded-xl p-4 transition-all duration-300 cursor-default card-glow`}
+                      } rounded-2xl p-4 backdrop-blur-sm transition-all duration-300 cursor-default card-glow`}
                     >
                       <div className="flex justify-between items-center mb-3">
                         <span className="font-medium text-white text-sm">

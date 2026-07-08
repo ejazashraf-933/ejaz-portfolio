@@ -15,7 +15,7 @@ export default function Projects() {
   const visibleProjects = showAll ? projects : projects.slice(0, 4);
 
   return (
-    <section id="projects" className="py-24 bg-[#131620] relative">
+    <section id="projects" className="py-24 relative">
       {/* Section divider */}
       <div className="absolute top-0 left-0 right-0 section-divider" />
 
@@ -52,7 +52,7 @@ export default function Projects() {
               >
                 <motion.div
                   whileHover={{ y: -4 }}
-                  className="bg-[#151921] border border-[#232838] rounded-xl overflow-hidden hover:border-blue-500/20 transition-all duration-300 card-glow"
+                  className="glass border border-white/10 rounded-2xl overflow-hidden hover:border-blue-500/30 transition-all duration-300 card-glow"
                 >
                   <div
                     className={`flex flex-col ${
