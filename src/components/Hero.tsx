@@ -149,10 +149,15 @@ export default function Hero() {
           >
             <div className="relative mx-auto w-full max-w-[340px]">
               {/* Gradient ring glow */}
-              <div className="absolute -inset-2 rounded-[2rem] bg-gradient-to-tr from-blue-500 via-cyan-400 to-indigo-500 opacity-25 blur-2xl" />
+              <div className="absolute -inset-2 rounded-full bg-gradient-to-tr from-blue-500 via-cyan-400 to-indigo-500 opacity-25 blur-2xl" />
 
-              {/* Photo */}
-              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden border border-white/10">
+              {/* Photo — the source (new-profile.png) is already a circular
+                  crop on a square canvas, so the frame must be a circle too
+                  (aspect-square + rounded-full). The old rounded-[2rem]
+                  rectangle didn't match: object-cover left the circle
+                  floating inside a rounded-rect, with the image's own white
+                  corner background bleeding through. */}
+              <div className="relative aspect-square rounded-full overflow-hidden border border-white/10">
                 <Image
                   src="/new-profile.png"
                   alt={personalInfo.name}
