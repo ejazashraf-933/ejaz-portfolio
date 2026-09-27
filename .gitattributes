@@ -1,0 +1,15 @@
+# Without this file, Git's core.autocrlf=true (common on Windows) rewrites
+# LF bytes to CRLF inside these files too, since Git has no other way to know
+# they aren't text. For binary formats that silently corrupts them - caught
+# 2026-09-27 when a merge produced a resume.pdf that grew by 115 bytes and
+# failed to parse (mismatched xref table). Marking them binary here stops
+# Git from touching their bytes at all.
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
