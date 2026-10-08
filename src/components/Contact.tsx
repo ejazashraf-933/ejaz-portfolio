@@ -13,6 +13,7 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 import { personalInfo } from "@/data/portfolio";
+import SectionHeading from "./SectionHeading";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -23,10 +24,13 @@ export default function Contact() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitted(false);
+    setFailed(false);
 
     try {
       const response = await fetch("https://formspree.io/f/mdaplwqq", {
@@ -39,10 +43,10 @@ export default function Contact() {
         setSubmitted(true);
         setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
-        alert("Failed to send message. Please try again.");
+        setFailed(true);
       }
     } catch {
-      alert("Failed to send message. Please try again.");
+      setFailed(true);
     }
 
     setIsSubmitting(false);
@@ -107,29 +111,13 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-24 relative">
-      {/* Section divider */}
-      <div className="absolute top-0 left-0 right-0 section-divider" />
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <p className="text-blue-400 text-sm font-medium tracking-wider uppercase mb-3">
-            Contact
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Get In Touch
-          </h2>
-          <div className="w-12 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mb-4" />
-          <p className="text-gray-500 max-w-xl mx-auto">
-            Have a project in mind or want to discuss an opportunity? Let&apos;s
-            connect.
-          </p>
-        </motion.div>
+        <SectionHeading
+          eyebrow="Contact"
+          title="Have a project in mind?"
+          description="Tell me what you want to build. I will reply with questions or a time for a short call."
+        />
 
         <div className="grid lg:grid-cols-5 gap-12">
           {/* Left - Contact Info */}
@@ -140,14 +128,6 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-2"
           >
-            <h3 className="text-xl font-bold text-white mb-6">
-              Let&apos;s build something great together
-            </h3>
-            <p className="text-gray-500 mb-8 leading-relaxed">
-              I&apos;m always open to discussing new projects, creative ideas,
-              or opportunities to be part of your vision.
-            </p>
-
             <div className="space-y-3">
               {contactInfo.map((item, index) => {
                 const isExternal = item.href.startsWith("http");
@@ -193,7 +173,7 @@ export default function Contact() {
           >
             <form
               onSubmit={handleSubmit}
-              className="glass border border-white/10 rounded-2xl p-8 space-y-5 card-glow"
+              className="card p-6 sm:p-8 space-y-5"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -265,7 +245,7 @@ export default function Contact() {
                 disabled={isSubmitting}
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
-                className="w-full py-3.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-500 transition-all duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
+                className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-full font-semibold transition-shadow duration-300 hover:shadow-[0_0_32px_rgba(34,211,238,0.35)] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm"
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
@@ -290,8 +270,18 @@ export default function Contact() {
                   className="flex items-center justify-center gap-2 text-emerald-400 text-sm py-2"
                 >
                   <FaCheckCircle />
-                  Message sent successfully! I&apos;ll get back to you soon.
+                  Message sent. I&apos;ll get back to you soon.
                 </motion.div>
+              )}
+
+              {failed && (
+                <p role="alert" className="text-center text-sm text-rose-300 py-2">
+                  The message could not be sent. Please try again, or email{" "}
+                  <a href={`mailto:${personalInfo.email}`} className="underline">
+                    {personalInfo.email}
+                  </a>
+                  .
+                </p>
               )}
             </form>
           </motion.div>

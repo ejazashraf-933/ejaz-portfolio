@@ -1,12 +1,13 @@
 import {
   Navbar,
   Hero,
-  About,
+  Stats,
+  Projects,
   Services,
   Skills,
   Experience,
-  Awards,
-  Projects,
+  About,
+  Faq,
   Contact,
   Footer,
 } from "@/components";
@@ -16,12 +17,13 @@ export default function Home() {
     <main className="min-h-screen">
       <Navbar />
       <Hero />
-      <About />
+      <Stats />
+      <Projects />
       <Services />
       <Skills />
       <Experience />
-      <Awards />
-      <Projects />
+      <About />
+      <Faq />
       <Contact />
       <Footer />
     </main>

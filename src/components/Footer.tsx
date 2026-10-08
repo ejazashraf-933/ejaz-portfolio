@@ -1,83 +1,61 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaHeart } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { SiUpwork } from "react-icons/si";
 import { personalInfo } from "@/data/portfolio";
 
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
+  { name: "Work", href: "#projects" },
+  { name: "Services", href: "#services" },
+  { name: "Experience", href: "#experience" },
+  { name: "FAQ", href: "#faq" },
   { name: "Contact", href: "#contact" },
 ];
 
+const socials = [
+  { href: personalInfo.social.linkedin, icon: FaLinkedin, label: "LinkedIn" },
+  { href: personalInfo.social.github, icon: FaGithub, label: "GitHub" },
+  { href: personalInfo.social.upwork, icon: SiUpwork, label: "Upwork" },
+];
+
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="relative z-10 bg-[#0a0b10]/70 backdrop-blur-md border-t border-[#232838] py-12">
+    <footer className="relative z-10 border-t border-white/[0.07] bg-[#050814]/80 py-12 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top row - Logo, Nav, Social */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
-          {/* Logo */}
-          <motion.a
-            href="#home"
-            whileHover={{ scale: 1.05 }}
-            className="text-xl font-bold text-white"
-          >
-            {personalInfo.name.split(" ")[0]}
-            <span className="text-blue-500">.</span>
-          </motion.a>
+        <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+          <div>
+            <a href="#home" className="text-lg font-extrabold tracking-tight text-white">
+              {personalInfo.name.split(" ")[0]}
+              <span className="gradient-text"> {personalInfo.name.split(" ")[1]}</span>
+            </a>
+            <p className="mt-2 text-sm text-muted">{personalInfo.title} · {personalInfo.location}</p>
+          </div>
 
-          {/* Quick Nav */}
-          <div className="flex items-center gap-6">
+          <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2">
             {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="text-sm text-gray-500 hover:text-white transition-colors duration-300"
-              >
+              <a key={link.name} href={link.href} className="text-sm text-muted hover:text-white transition-colors">
                 {link.name}
               </a>
             ))}
-          </div>
+          </nav>
 
-          {/* Social Links */}
           <div className="flex items-center gap-3">
-            <motion.a
-              href={personalInfo.social.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -2 }}
-              className="w-10 h-10 rounded-lg border border-[#232838] flex items-center justify-center text-gray-500 hover:text-white hover:border-gray-600 transition-all duration-300"
-            >
-              <FaGithub size={18} />
-            </motion.a>
-            <motion.a
-              href={personalInfo.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -2 }}
-              className="w-10 h-10 rounded-lg border border-[#232838] flex items-center justify-center text-gray-500 hover:text-blue-400 hover:border-blue-500/50 transition-all duration-300"
-            >
-              <FaLinkedin size={18} />
-            </motion.a>
+            {socials.map(({ href, icon: Icon, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-muted hover:border-cyan-400/40 hover:text-white transition-colors"
+              >
+                <Icon size={17} />
+              </a>
+            ))}
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="section-divider mb-8" />
-
-        {/* Bottom row */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-600 text-sm">
-            &copy; {currentYear} {personalInfo.name}. All rights reserved.
-          </p>
-          <p className="text-gray-700 text-xs flex items-center gap-1">
-            Built with <FaHeart className="text-red-500/50 text-[10px]" /> using Next.js & TailwindCSS
-          </p>
-        </div>
+        <p className="mt-10 border-t border-white/[0.07] pt-6 text-sm text-muted">
+          &copy; {new Date().getFullYear()} {personalInfo.name}. All rights reserved.
+        </p>
       </div>
     </footer>
   );

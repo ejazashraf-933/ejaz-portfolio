@@ -1,102 +1,76 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FaLayerGroup, FaMobileAlt, FaCode, FaServer } from "react-icons/fa";
+import { FaLaptopCode, FaMobileAlt, FaRobot, FaCheck } from "react-icons/fa";
+import { services, process } from "@/data/portfolio";
+import SectionHeading from "./SectionHeading";
 
-const services = [
-  {
-    icon: FaLayerGroup,
-    title: "Full-Stack Web Development",
-    description:
-      "End-to-end web applications with React, Angular, Next.js, NestJS, and FastAPI — from the UI down to the database.",
-    iconColor: "text-blue-400",
-    iconBg: "bg-blue-500/10",
-    border: "hover:border-blue-500/30",
-    gradient: "from-blue-500/[0.07] to-cyan-500/[0.07]",
-  },
-  {
-    icon: FaMobileAlt,
-    title: "Mobile App Development",
-    description:
-      "Cross-platform iOS & Android apps with React Native and Expo — shipped to the App Store and Google Play.",
-    iconColor: "text-purple-400",
-    iconBg: "bg-purple-500/10",
-    border: "hover:border-purple-500/30",
-    gradient: "from-purple-500/[0.07] to-pink-500/[0.07]",
-  },
-  {
-    icon: FaCode,
-    title: "Frontend & UI Engineering",
-    description:
-      "Responsive, accessible interfaces with TypeScript, Tailwind CSS, RxJS, and TanStack Query — with a focus on performance.",
-    iconColor: "text-cyan-400",
-    iconBg: "bg-cyan-500/10",
-    border: "hover:border-cyan-500/30",
-    gradient: "from-cyan-500/[0.07] to-teal-500/[0.07]",
-  },
-  {
-    icon: FaServer,
-    title: "Backend & APIs",
-    description:
-      "Secure REST and real-time WebSocket APIs on PostgreSQL with role-based access control, JWT/OAuth 2.0, and 2FA.",
-    iconColor: "text-emerald-400",
-    iconBg: "bg-emerald-500/10",
-    border: "hover:border-emerald-500/30",
-    gradient: "from-emerald-500/[0.07] to-teal-500/[0.07]",
-  },
-];
+const icons = { web: FaLaptopCode, mobile: FaMobileAlt, ai: FaRobot } as const;
+const tints = {
+  web: "from-blue-500/25 to-cyan-400/10 text-cyan-300",
+  mobile: "from-violet-500/25 to-blue-400/10 text-violet-300",
+  ai: "from-cyan-400/25 to-violet-500/10 text-sky-300",
+} as const;
 
 export default function Services() {
   return (
-    <section id="services" className="py-24 relative">
-      {/* Section divider */}
-      <div className="absolute top-0 left-0 right-0 section-divider" />
-
+    <section id="services" className="relative py-24">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <p className="text-blue-400 text-sm font-medium tracking-wider uppercase mb-3">
-            Capabilities
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            What I Do
-          </h2>
-          <div className="w-12 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 mx-auto mb-4" />
-          <p className="text-gray-500 max-w-xl mx-auto">
-            I build and ship complete products — across web, mobile, and the
-            services that power them.
-          </p>
-        </motion.div>
+        <SectionHeading
+          eyebrow="What I build"
+          title="Three things I do well, from idea to launch"
+          description="Whether you run a small business or a product team, you deal with one person who plans it, builds it and puts it live."
+        />
 
-        {/* Service Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              whileHover={{ y: -6 }}
-              className={`bg-gradient-to-br ${service.gradient} border border-white/10 ${service.border} p-7 rounded-2xl backdrop-blur-sm transition-all duration-300 card-glow cursor-default`}
-            >
-              <div
-                className={`w-12 h-12 ${service.iconBg} rounded-xl flex items-center justify-center mb-5`}
+        <div className="grid gap-6 md:grid-cols-3">
+          {services.map((service, index) => {
+            const Icon = icons[service.key as keyof typeof icons];
+            return (
+              <motion.div
+                key={service.key}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                className="card flex flex-col p-7"
               >
-                <service.icon className={`${service.iconColor} text-xl`} />
-              </div>
-              <h3 className="font-semibold text-white mb-3">{service.title}</h3>
-              <p className="text-sm text-gray-500 leading-relaxed">
-                {service.description}
-              </p>
-            </motion.div>
-          ))}
+                <div
+                  className={`mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br ${tints[service.key as keyof typeof tints]}`}
+                >
+                  <Icon size={20} />
+                </div>
+                <h3 className="text-xl font-bold tracking-tight text-white">{service.title}</h3>
+                <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{service.summary}</p>
+                <ul className="mt-6 space-y-3 border-t border-white/[0.07] pt-6">
+                  {service.points.map((point) => (
+                    <li key={point} className="flex items-start gap-3 text-sm text-slate-300">
+                      <FaCheck className="mt-1 shrink-0 text-[0.65rem] text-cyan-400" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            );
+          })}
         </div>
+
+        {/* How a project runs */}
+        <ol className="mt-10 grid gap-px overflow-hidden rounded-3xl border border-white/[0.08] bg-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
+          {process.map((p, i) => (
+            <motion.li
+              key={p.step}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className="bg-[#080d1c] p-6"
+            >
+              <span className="font-mono text-xs text-cyan-300">Step {i + 1}</span>
+              <p className="mt-2 text-lg font-bold text-white">{p.step}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{p.detail}</p>
+            </motion.li>
+          ))}
+        </ol>
       </div>
     </section>
   );
