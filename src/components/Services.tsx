@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FiMonitor, FiSmartphone, FiCpu, FiCheck, FiMessageCircle, FiClipboard, FiCode, FiSend } from "react-icons/fi";
 import { services, process } from "@/data/portfolio";
 import SectionHeading from "./SectionHeading";
+import { trackPointer } from "./pointer";
 
 const serviceIcons = { web: FiMonitor, mobile: FiSmartphone, ai: FiCpu } as const;
 const stepIcons = [FiMessageCircle, FiClipboard, FiCode, FiSend];
@@ -29,7 +30,8 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.08, duration: 0.5 }}
-                className="group flex flex-col rounded-[24px] border border-black/[0.06] bg-paper-2 p-8 shadow-[0_1px_0_rgba(0,0,0,0.04),0_20px_40px_-28px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:-translate-y-1"
+                onPointerMove={trackPointer}
+                className="spotlight spotlight-paper group flex flex-col rounded-[24px] border border-black/[0.06] bg-paper-2 p-8 shadow-[0_1px_0_rgba(0,0,0,0.04),0_20px_40px_-28px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:-translate-y-1"
               >
                 <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-paper-ink text-white transition-colors group-hover:bg-accent">
                   <Icon size={21} />

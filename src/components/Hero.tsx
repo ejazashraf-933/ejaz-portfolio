@@ -1,6 +1,9 @@
-import { FaArrowRight, FaDownload } from "react-icons/fa";
+import { FiDownload } from "react-icons/fi";
 import { personalInfo } from "@/data/portfolio";
 import ProjectShowcase from "./ProjectShowcase";
+import CtaButton from "./CtaButton";
+import GhostButton from "./GhostButton";
+import CountUp from "./CountUp";
 
 const rise = (i: number) => ({ animationDelay: `${0.08 * i}s` });
 
@@ -28,7 +31,7 @@ export default function Hero() {
           <h1 style={rise(2)} className="rise display text-[3.1rem] text-white sm:text-7xl lg:text-[5.6rem]">
             Real products.
             <br />
-            <span className="text-accent">Shipped</span> end to end.
+            <span className="text-gradient">Shipped</span> end to end.
           </h1>
 
           <p style={rise(3)} className="rise mx-auto mt-7 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
@@ -36,28 +39,10 @@ export default function Hero() {
           </p>
 
           <div style={rise(4)} className="rise mt-10 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="#projects"
-              className="group inline-flex items-center gap-2.5 rounded-full bg-accent px-7 py-3.5 font-semibold text-white transition-colors hover:bg-accent-deep"
-            >
-              View my work
-              <FaArrowRight className="text-sm transition-transform group-hover:translate-x-1" />
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/[0.05]"
-            >
-              Work with me
-            </a>
-            <a
-              href={personalInfo.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-3.5 text-sm font-medium text-muted transition-colors hover:text-white"
-            >
-              <FaDownload size={13} />
+            <CtaButton href="#projects" label="View my work" hoverLabel="Explore projects" size="lg" />
+            <GhostButton href={personalInfo.resumeUrl} external icon={<FiDownload size={17} />}>
               Download CV
-            </a>
+            </GhostButton>
           </div>
         </div>
       </div>
@@ -70,7 +55,9 @@ export default function Hero() {
               key={stat.label}
               className={`px-4 py-7 sm:px-8 ${i % 2 === 0 ? "border-r" : ""} ${i < 2 ? "border-b lg:border-b-0" : ""} border-white/[0.08] lg:border-r lg:last:border-r-0`}
             >
-              <p className="text-2xl font-bold tracking-tight text-white sm:text-[1.7rem]">{stat.value}</p>
+              <p className="text-2xl font-bold tracking-tight text-white sm:text-[1.7rem]">
+                <CountUp value={stat.value} />
+              </p>
               <p className="mt-1.5 text-sm text-muted">{stat.label}</p>
             </div>
           ))}

@@ -2,13 +2,17 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaEnvelope, FaLinkedin, FaWhatsapp, FaPaperPlane, FaCheckCircle } from "react-icons/fa";
-import { SiUpwork } from "react-icons/si";
+import { FaPaperPlane, FaCheckCircle } from "react-icons/fa";
 import { FiMapPin } from "react-icons/fi";
 import { personalInfo } from "@/data/portfolio";
+import CtaButton from "./CtaButton";
+import GhostButton from "./GhostButton";
+import { socials } from "./SocialLinks";
+
+const contactSocials = socials.filter((s) => s.label !== "GitHub");
 
 const inputClass =
-  "w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3.5 text-sm text-white placeholder-white/30 transition-colors focus:border-accent focus:outline-none";
+  "w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3.5 text-sm text-white placeholder-white/30 transition-all duration-300 hover:border-white/20 focus:border-accent focus:bg-black/40 focus:outline-none focus:ring-4 focus:ring-accent/15";
 const labelClass = "mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-muted";
 
 export default function Contact() {
@@ -43,12 +47,6 @@ export default function Contact() {
     setIsSubmitting(false);
   };
 
-  const buttons = [
-    { label: "LinkedIn", href: personalInfo.social.linkedin, icon: FaLinkedin },
-    { label: "Upwork", href: personalInfo.social.upwork, icon: SiUpwork },
-    { label: "WhatsApp", href: `https://wa.me/${personalInfo.phone.replace(/\D/g, "")}`, icon: FaWhatsapp },
-  ];
-
   return (
     <section id="contact" className="relative overflow-hidden pb-24 pt-32">
       {/* Glow arcs */}
@@ -64,29 +62,28 @@ export default function Contact() {
         >
           <p className="eyebrow mb-5">Contact</p>
           <h2 className="display text-[3rem] text-white sm:text-7xl lg:text-[5.4rem]">
-            Let&apos;s build something <span className="text-accent">real.</span>
+            Let&apos;s build something <span className="text-gradient">real.</span>
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted">
             Tell me what you want to build. I will reply with questions or a time for a short call.
           </p>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <a
-              href={`mailto:${personalInfo.email}`}
-              className="inline-flex items-center gap-2.5 rounded-full bg-accent px-7 py-3.5 font-semibold text-white transition-colors hover:bg-accent-deep"
-            >
-              <FaEnvelope /> Get in touch
-            </a>
-            {buttons.map(({ label, href, icon: Icon }) => (
-              <a
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+            <CtaButton href={`mailto:${personalInfo.email}`} label="Get in touch" hoverLabel="Send an email" size="lg" dot />
+            {contactSocials.map(({ label, href, icon: Icon, bg, fg }) => (
+              <GhostButton
                 key={label}
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 rounded-full border border-white/25 px-6 py-3.5 font-semibold text-white transition-colors hover:border-white/50 hover:bg-white/[0.05]"
+                external
+                icon={
+                  <span style={{ backgroundColor: bg, color: fg }} className="flex h-7 w-7 items-center justify-center rounded-full">
+                    <Icon size={14} />
+                  </span>
+                }
+                size="chip"
               >
-                <Icon /> {label}
-              </a>
+                {label}
+              </GhostButton>
             ))}
           </div>
           <p className="mt-7 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-muted">
@@ -162,13 +159,18 @@ export default function Contact() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-white py-3.5 text-sm font-bold text-ink transition-colors hover:bg-accent hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="group/send relative flex w-full items-center justify-center gap-2.5 overflow-hidden rounded-full bg-gradient-to-r from-accent via-[#6a5cff] to-[#9a5cff] bg-[length:200%_100%] bg-left py-4 text-sm font-bold text-white shadow-[0_14px_36px_-14px_rgba(124,92,255,0.95)] transition-all duration-500 hover:-translate-y-0.5 hover:bg-right disabled:cursor-not-allowed disabled:opacity-60"
           >
+            <span aria-hidden className="cta-beam opacity-0 transition-opacity duration-300 group-hover/send:opacity-25" />
             {isSubmitting ? (
-              "Sending..."
+              <>
+                <span className="relative h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                <span className="relative">Sending…</span>
+              </>
             ) : (
               <>
-                <FaPaperPlane /> Send message
+                <FaPaperPlane className="relative transition-transform duration-300 group-hover/send:-translate-y-0.5 group-hover/send:translate-x-1" />
+                <span className="relative">Send message</span>
               </>
             )}
           </button>

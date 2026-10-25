@@ -116,18 +116,22 @@ export default function ProjectShowcase() {
               <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
                 <a
                   href={cardHref}
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-ink transition-colors hover:bg-accent hover:text-white"
+                  className="group/see inline-flex items-center gap-3 rounded-full bg-white py-1.5 pl-5 pr-1.5 text-sm font-bold text-ink shadow-[0_10px_30px_-12px_rgba(255,255,255,0.6)] transition-transform duration-300 hover:-translate-y-0.5"
                 >
-                  See what I built <FiArrowRight />
+                  See what I built
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-white transition-colors duration-300 group-hover/see:bg-accent">
+                    <FiArrowRight className="transition-transform duration-300 group-hover/see:translate-x-0.5" />
+                  </span>
                 </a>
                 {(project.liveUrl || project.appStoreUrl || project.playStoreUrl) && (
                   <a
                     href={project.liveUrl ?? project.appStoreUrl ?? project.playStoreUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-white transition-colors hover:text-accent"
+                    className="group/live inline-flex items-center gap-1.5 bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1.5px] bg-left-bottom bg-no-repeat pb-0.5 text-sm font-semibold text-white transition-[background-size] duration-300 hover:bg-[length:100%_1.5px]"
                   >
-                    {project.liveUrl ? "Live site" : "In the store"} <FiArrowUpRight />
+                    {project.liveUrl ? "Live site" : "In the store"}
+                    <FiArrowUpRight className="transition-transform duration-300 group-hover/live:-translate-y-0.5 group-hover/live:translate-x-0.5" />
                   </a>
                 )}
               </div>
@@ -165,23 +169,23 @@ export default function ProjectShowcase() {
           <button
             onClick={() => go(index - 1)}
             aria-label="Previous project"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-white/40 hover:bg-white/10"
+            className="group/prev flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white backdrop-blur-md transition-all duration-300 hover:border-white/40 hover:bg-white/10"
           >
-            <FiArrowLeft />
+            <FiArrowLeft className="transition-transform duration-300 group-hover/prev:-translate-x-0.5" />
           </button>
           <button
             onClick={() => setUserPaused(!userPaused)}
             aria-label={userPaused ? "Play slideshow" : "Pause slideshow"}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:border-white/40 hover:bg-white/10"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.04] text-white backdrop-blur-md transition-all duration-300 hover:border-white/40 hover:bg-white/10"
           >
             {userPaused ? <FiPlay size={14} /> : <FiPause size={14} />}
           </button>
           <button
             onClick={() => go(index + 1)}
             aria-label="Next project"
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-white transition-colors hover:bg-accent-deep"
+            className="group/next flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-accent to-[#9a5cff] text-white shadow-[0_0_20px_rgba(124,92,255,0.55)] transition-all duration-300 hover:shadow-[0_0_28px_rgba(124,92,255,0.9)]"
           >
-            <FiArrowRight />
+            <FiArrowRight className="transition-transform duration-300 group-hover/next:translate-x-0.5" />
           </button>
         </div>
       </div>

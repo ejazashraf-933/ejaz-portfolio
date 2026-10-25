@@ -4,9 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaGooglePlay, FaApple, FaChevronDown } from "react-icons/fa";
-import { FiArrowUpRight } from "react-icons/fi";
+import { FiArrowUpRight, FiGlobe } from "react-icons/fi";
 import { projects, type Project, type BadgeTone } from "@/data/portfolio";
 import SectionHeading from "./SectionHeading";
+import GhostButton from "./GhostButton";
+import { trackPointer } from "./pointer";
 
 export const INITIAL_COUNT = 7;
 
@@ -19,24 +21,25 @@ const badgeDot: Record<BadgeTone, string> = {
 };
 
 const linkClass =
-  "inline-flex items-center gap-1.5 text-sm font-semibold text-white transition-colors hover:text-accent";
+  "group/link inline-flex items-center gap-1.5 rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-1.5 text-[0.8rem] font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-white/35 hover:bg-white/10";
+const arrow = <FiArrowUpRight className="opacity-60 transition-all duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5 group-hover/link:opacity-100" />;
 
 function ProjectLinks({ project }: { project: Project }) {
   return (
     <>
       {project.liveUrl && (
         <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
-          Live site <FiArrowUpRight />
+          <FiGlobe size={13} className="text-emerald-300" /> Live site {arrow}
         </a>
       )}
       {project.appStoreUrl && (
         <a href={project.appStoreUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
-          <FaApple size={14} /> App Store
+          <FaApple size={14} /> App Store {arrow}
         </a>
       )}
       {project.playStoreUrl && (
         <a href={project.playStoreUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
-          <FaGooglePlay size={12} /> Google Play
+          <FaGooglePlay size={11} className="text-[#34d399]" /> Google Play {arrow}
         </a>
       )}
     </>
@@ -55,7 +58,8 @@ function ProjectCard({ project, index, featured }: { project: Project; index: nu
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, delay: featured ? 0 : (index % 2) * 0.08 }}
-      className={`group overflow-hidden rounded-[22px] border border-white/[0.08] bg-ink-2 transition-colors hover:border-white/20 ${
+      onPointerMove={trackPointer}
+      className={`spotlight group overflow-hidden rounded-[22px] border border-white/[0.08] bg-ink-2 transition-colors hover:border-white/15 ${
         featured ? "grid lg:col-span-2 lg:grid-cols-[1.12fr_1fr]" : "flex flex-col"
       }`}
     >
@@ -130,10 +134,10 @@ function ProjectCard({ project, index, featured }: { project: Project; index: nu
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-controls={detailsId}
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent transition-colors hover:text-white"
+            className="inline-flex items-center gap-2 rounded-full bg-accent/15 px-3.5 py-1.5 text-[0.8rem] font-semibold text-[#a9bdff] ring-1 ring-accent/35 transition-all duration-300 hover:bg-accent hover:text-white hover:ring-accent"
           >
             {open ? "Hide details" : "What I built"}
-            <FaChevronDown size={10} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+            <FaChevronDown size={9} className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
           </button>
           <ProjectLinks project={project} />
         </div>
@@ -163,13 +167,13 @@ export default function Projects() {
 
         {projects.length > INITIAL_COUNT && (
           <div className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <button
+            <GhostButton
               onClick={() => setShowAll(!showAll)}
-              className="inline-flex items-center gap-2 border-b-2 border-accent pb-1 font-semibold text-white transition-colors hover:text-accent"
+              ariaExpanded={showAll}
+              icon={<FaChevronDown size={12} className={`transition-transform duration-300 ${showAll ? "rotate-180" : ""}`} />}
             >
               {showAll ? "Show fewer projects" : `Show all ${projects.length} projects`}
-              <FaChevronDown size={11} className={`transition-transform ${showAll ? "rotate-180" : ""}`} />
-            </button>
+            </GhostButton>
             <p className="text-sm text-muted">15+ projects delivered in total. These are the ones I can show in detail.</p>
           </div>
         )}
