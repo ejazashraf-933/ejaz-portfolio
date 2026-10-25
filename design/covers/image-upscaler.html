@@ -1,0 +1,161 @@
+﻿<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="kit.css">
+<style>
+  .stage { --bg: radial-gradient(110% 90% at 50% 0%, #4a1840 0%, #1c0a1d 45%, #070308 100%); }
+  .frame {
+    position: absolute; left: 70px; top: 120px; width: 1060px; height: 596px;
+    border-radius: 22px; overflow: hidden; background: #000;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.12), 0 60px 120px -30px rgba(0,0,0,.9), 0 0 140px -20px rgba(236,72,153,.35);
+  }
+  .layer { position: absolute; inset: 0; }
+  .layer svg, .layer canvas { display: block; width: 100%; height: 100%; }
+  canvas { image-rendering: pixelated; }
+  .low { clip-path: inset(0 50% 0 0); }
+  .low canvas { filter: saturate(.8) contrast(.95); }
+  .divider { position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: #fff; box-shadow: 0 0 24px rgba(0,0,0,.6); }
+  .handle { position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-weight: 800; color: #17121f; font-size: 15px; box-shadow: 0 10px 30px rgba(0,0,0,.5); }
+  .tag { position: absolute; top: 18px; padding: 7px 12px; border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+  .loupe { position: absolute; width: 250px; height: 250px; border-radius: 50%; overflow: hidden; background: #000;
+    box-shadow: 0 0 0 4px #fff, 0 0 0 5px rgba(0,0,0,.2), 0 40px 80px -20px rgba(0,0,0,.85); }
+  .loupe .zoom { position: absolute; width: 3180px; height: 1788px; }
+  .loupe .zoom svg, .loupe .zoom canvas { width: 100%; height: 100%; display: block; }
+  .ltag { position: absolute; left: 50%; bottom: -16px; transform: translateX(-50%); padding: 7px 14px; border-radius: 999px; font-size: 12px; font-weight: 800; white-space: nowrap; box-shadow: 0 8px 20px rgba(0,0,0,.4); }
+  .focus { position: absolute; width: 84px; height: 84px; border-radius: 50%; border: 2px dashed rgba(255,255,255,.85); }
+  .float.dark.row > * { white-space: nowrap; }
+  .seg span { padding: 6px 12px; border-radius: 8px; font-size: 11.5px; font-weight: 700; color: #b9b2c8; }
+  .seg span.on { background: #fff; color: #17121f; }
+</style></head>
+<body><div class="stage">
+  <div class="wall-grid"></div>
+  <div class="glow" style="width:900px;height:520px;left:150px;top:-160px;background:rgba(236,72,153,.38)"></div>
+  <div class="glow" style="width:520px;height:400px;left:820px;top:560px;background:rgba(249,115,22,.25)"></div>
+  <div class="glow" style="width:520px;height:400px;left:-120px;top:560px;background:rgba(124,58,237,.25)"></div>
+
+  <!-- toolbar -->
+  <div class="float dark row" style="left:50%;top:36px;transform:translateX(-50%);padding:10px 12px 10px 18px;gap:18px;border-radius:16px;z-index:5">
+    <div class="row" style="gap:10px"><span style="width:26px;height:26px;border-radius:8px;background:linear-gradient(135deg,#ec4899,#f97316)"></span><b style="font-size:13.5px">Image Upscaler</b><span style="font-size:11.5px;color:#9d96ad">sunset-lake.jpg</span></div>
+    <div class="row seg" style="background:#1d1726;border-radius:10px;padding:3px"><span>2×</span><span class="on">4×</span><span>8×</span></div>
+    <span style="font-size:11.5px;color:#c9c2d6" class="mono">640×360 → 2560×1440</span>
+    <span class="pill" style="background:linear-gradient(135deg,#ec4899,#f97316);color:#fff;padding:9px 16px;font-size:11.5px">Download</span>
+  </div>
+
+  <div class="frame">
+    <div class="layer" id="sharp"></div>
+    <div class="layer low"><canvas id="lowc" width="132" height="74"></canvas></div>
+    <div class="divider"></div>
+    <div class="handle">‹ ›</div>
+    <span class="tag" style="left:18px;background:rgba(0,0,0,.6);color:#fff">Original · 640px</span>
+    <span class="tag" style="right:18px;background:rgba(255,255,255,.94);color:#17121f">Upscaled 4× · AI</span>
+    <div class="focus" style="left:258px;top:146px"></div>
+    <div class="focus" style="left:718px;top:166px"></div>
+  </div>
+
+  <!-- loupes -->
+  <div class="abs" style="left:120px;top:590px;width:250px;height:250px;z-index:6"><div class="loupe"><div class="zoom" id="zl"><canvas id="lowz" width="132" height="74"></canvas></div></div><span class="ltag" style="background:#17121f;color:#fff;box-shadow:0 0 0 3px #fff">Before · 640px</span></div>
+  <div class="abs" style="left:830px;top:590px;width:250px;height:250px;z-index:6"><div class="loupe"><div class="zoom" id="zr"></div></div><span class="ltag" style="background:linear-gradient(135deg,#ec4899,#f97316);color:#fff;box-shadow:0 0 0 3px #fff">After · 4× AI</span></div>
+  <div class="float dark row" style="left:50%;top:770px;transform:translateX(-50%);padding:12px 16px;gap:12px;z-index:5">
+    <div class="avatar" style="width:30px;height:30px;background:rgba(110,231,168,.15);color:#6ee7a8;font-size:13px">✓</div>
+    <div><div style="font-weight:700;font-size:12.5px">Done in 3.8s</div><div style="font-size:10.5px;color:#9d96ad">Saved to your library · 2FA on</div></div>
+  </div>
+
+  <script>
+    // Seeded random so every render is identical
+    let seed = 7;
+    const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const W = 1060, H = 596;
+
+    function pine(x, base, h) {
+      const w = h * 0.34;
+      let d = "";
+      for (let t = 0; t < 4; t++) {
+        const top = base - h + t * h * 0.2, bot = base - h * 0.32 + t * h * 0.2 - (t === 3 ? 0 : 0);
+        const ww = w * (0.45 + t * 0.2);
+        d += `M${x} ${top} L${x + ww} ${Math.min(bot, base)} L${x - ww} ${Math.min(bot, base)}Z`;
+      }
+      return d + `M${x - 1.5} ${base - 4} h3 v6 h-3Z`;
+    }
+
+    function scene() {
+      let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f1440"/><stop offset=".28" stop-color="#36277a"/><stop offset=".5" stop-color="#a6447f"/><stop offset=".64" stop-color="#ef8459"/><stop offset=".74" stop-color="#ffc98a"/></linearGradient>
+        <radialGradient id="sun"><stop offset="0" stop-color="#fff6dc"/><stop offset=".18" stop-color="#ffe2a6"/><stop offset=".45" stop-color="#ffab6e" stop-opacity=".55"/><stop offset="1" stop-color="#ff8a5a" stop-opacity="0"/></radialGradient>
+        <linearGradient id="far" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b45f93"/><stop offset="1" stop-color="#7b3f7f"/></linearGradient>
+        <linearGradient id="mid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a3a83"/><stop offset="1" stop-color="#3b2160"/></linearGradient>
+        <linearGradient id="near" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1a4a"/><stop offset="1" stop-color="#180f2c"/></linearGradient>
+        <linearGradient id="lake" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3a77a"/><stop offset=".25" stop-color="#b85d86"/><stop offset=".7" stop-color="#3d2463"/><stop offset="1" stop-color="#120b24"/></linearGradient>
+        <filter id="soft"><feGaussianBlur stdDeviation="6"/></filter>
+        <filter id="mist"><feGaussianBlur stdDeviation="14"/></filter>
+        <filter id="ripple"><feTurbulence type="fractalNoise" baseFrequency="0.004 0.09" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="14"/></filter>
+      </defs>
+      <rect width="${W}" height="${H}" fill="url(#sky)"/>`;
+      // stars
+      for (let i = 0; i < 90; i++) {
+        const x = rnd() * W, y = rnd() * 170, r = rnd() * 1.3 + 0.3;
+        s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(2)}" fill="#fff" opacity="${(0.3 + rnd() * 0.7).toFixed(2)}"/>`;
+      }
+      // cloud streaks
+      s += `<g fill="#ffd2b0" opacity=".28" filter="url(#soft)"><ellipse cx="220" cy="250" rx="180" ry="7"/><ellipse cx="840" cy="232" rx="210" ry="8"/><ellipse cx="560" cy="205" rx="120" ry="5"/></g>`;
+      s += `<circle cx="530" cy="330" r="190" fill="url(#sun)"/><circle cx="530" cy="330" r="44" fill="#fff3d4"/>`;
+      // far range
+      s += `<path d="M0 340 L60 300 L110 318 L170 268 L230 300 L300 250 L360 292 L420 270 L480 300 L560 262 L640 296 L700 272 L770 300 L840 258 L910 296 L980 276 L1060 300 L1060 420 L0 420Z" fill="url(#far)" opacity=".9"/>`;
+      // mid range with two hero peaks (x=300 and x=760)
+      s += `<path d="M0 372 L90 320 L170 352 L300 188 L380 300 L450 338 L520 312 L600 350 L680 290 L760 208 L860 318 L930 300 L1060 350 L1060 430 L0 430Z" fill="url(#mid)"/>`;
+      // shaded faces
+      s += `<path d="M300 188 L380 300 L450 338 L360 360 Z" fill="#000" opacity=".18"/><path d="M760 208 L860 318 L930 300 L820 360Z" fill="#000" opacity=".18"/>`;
+      // snow caps with light and shadow sides
+      s += `<path d="M300 188 L326 222 L314 218 L304 232 L292 220 L280 226 L270 226Z" fill="#fde7f0"/><path d="M300 188 L326 222 L314 218 L304 232Z" fill="#c9a3c4"/>`;
+      s += `<path d="M760 208 L788 240 L776 238 L766 252 L754 240 L742 246 L732 240Z" fill="#fde7f0"/><path d="M760 208 L788 240 L776 238 L766 252Z" fill="#c9a3c4"/>`;
+      s += `<path d="M680 290 L694 304 L686 304 L680 312 L672 304 L664 306Z" fill="#f4d4e6" opacity=".9"/>`;
+      // ridge lines for detail
+      s += `<g stroke="#9a6aa8" stroke-width="1.2" fill="none" opacity=".55"><path d="M300 188 L292 240 L298 270 L286 310"/><path d="M760 208 L770 260 L762 290 L774 330"/><path d="M300 188 L250 250 L230 300"/><path d="M760 208 L710 262 L700 300"/></g>`;
+      // mist band
+      s += `<g fill="#ffd6e6" opacity=".22" filter="url(#mist)"><ellipse cx="250" cy="390" rx="320" ry="22"/><ellipse cx="820" cy="396" rx="300" ry="20"/></g>`;
+      // near hills
+      s += `<path d="M0 410 L80 380 L170 404 L260 384 L340 408 L420 392 L520 414 L620 394 L720 412 L820 388 L930 408 L1060 390 L1060 432 L0 432Z" fill="url(#near)"/>`;
+      // lake
+      s += `<rect y="430" width="${W}" height="${H - 430}" fill="url(#lake)"/>`;
+      // reflection of the ranges
+      s += `<g transform="translate(0 860) scale(1 -1)" opacity=".42" filter="url(#ripple)"><path d="M0 372 L90 320 L170 352 L300 188 L380 300 L450 338 L520 312 L600 350 L680 290 L760 208 L860 318 L930 300 L1060 350 L1060 430 L0 430Z" fill="#2a1747"/></g>`;
+      // sun glitter
+      for (let i = 0; i < 22; i++) {
+        const y = 440 + i * 6.5, w = 120 - i * 4 + rnd() * 26;
+        s += `<rect x="${(530 - w / 2 + (rnd() - .5) * 20).toFixed(1)}" y="${y}" width="${w.toFixed(1)}" height="1.6" rx="1" fill="#ffe2b8" opacity="${(0.75 - i * 0.03).toFixed(2)}"/>`;
+      }
+      for (let i = 0; i < 40; i++) {
+        const x = rnd() * W, y = 450 + rnd() * 140;
+        s += `<rect x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${(20 + rnd() * 50).toFixed(1)}" height="1" fill="#fff" opacity=".12"/>`;
+      }
+      // pine clusters on the shore
+      let trees = "";
+      for (let i = 0; i < 16; i++) trees += pine(20 + i * 13 + rnd() * 8, 436, 50 + rnd() * 60);
+      for (let i = 0; i < 16; i++) trees += pine(850 + i * 13 + rnd() * 8, 436, 50 + rnd() * 60);
+      s += `<path d="${trees}" fill="#0d0819"/>`;
+      // birds
+      s += `<g stroke="#2a1840" stroke-width="2" fill="none" stroke-linecap="round"><path d="M610 150 q8 -8 14 0 q6 -8 14 0"/><path d="M650 128 q6 -6 10 0 q5 -6 10 0"/><path d="M585 120 q5 -5 9 0 q4 -5 9 0"/></g>`;
+      // foreground reeds
+      let reeds = "";
+      for (let i = 0; i < 26; i++) { const x = rnd() * 180; reeds += `M${x.toFixed(1)} ${H} q${(rnd() * 20 - 4).toFixed(1)} -${(50 + rnd() * 50).toFixed(1)} ${(rnd() * 16 + 4).toFixed(1)} -${(80 + rnd() * 60).toFixed(1)}`; }
+      for (let i = 0; i < 26; i++) { const x = W - rnd() * 180; reeds += `M${x.toFixed(1)} ${H} q${(rnd() * 20 - 16).toFixed(1)} -${(50 + rnd() * 50).toFixed(1)} -${(rnd() * 16 + 4).toFixed(1)} -${(80 + rnd() * 60).toFixed(1)}`; }
+      s += `<path d="${reeds}" stroke="#0a0614" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+      return s + `</svg>`;
+    }
+
+    const svg = scene();
+    document.getElementById("sharp").innerHTML = svg;
+    // Zoomed views: scale 3x, centred on each peak
+    const place = (el, fx, fy) => { el.style.left = `${125 - fx * 3}px`; el.style.top = `${125 - fy * 3}px`; };
+    const zr = document.getElementById("zr"); zr.innerHTML = svg; place(zr, 762, 238);
+    place(document.getElementById("zl"), 302, 218);
+
+    // Real low-resolution version: draw the scene into a tiny canvas, show it with hard pixels
+    const img = new Image();
+    img.onload = () => {
+      for (const id of ["lowc", "lowz"]) {
+        const ctx = document.getElementById(id).getContext("2d");
+        ctx.drawImage(img, 0, 0, 132, 74);
+      }
+    };
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg.replace("<svg ", `<svg width="${W}" height="${H}" `));
+  </script>
+</div></body></html>

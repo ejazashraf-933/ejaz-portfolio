@@ -1,0 +1,88 @@
+﻿<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="kit.css">
+<style>
+  .stage { --bg: radial-gradient(100% 90% at 50% 15%, #26336b 0%, #111836 45%, #05070f 100%); }
+  :root { --p: #5173cc; --p2: #84a5f2; --p3: #cdddff; }
+  .side a { display: flex; align-items: center; gap: 9px; padding: 7px 10px; border-radius: 8px; font-size: 10.5px; color: #5d6478; }
+  .side a i { width: 13px; height: 13px; border-radius: 4px; border: 1.5px solid currentColor; opacity: .7; }
+  .side a.on { background: #eef3ff; color: var(--p); font-weight: 600; }
+  .colh { display: flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700; color: #1d2333; margin-bottom: 8px; }
+  .colh em { font-style: normal; font-size: 9px; color: #8a90a6; background: #eef0f5; border-radius: 6px; padding: 1px 6px; }
+  .task { background: #fff; border: 1px solid #eceef4; border-radius: 10px; padding: 10px; margin-bottom: 8px; font-size: 10.5px; box-shadow: 0 1px 2px rgba(0,0,0,.03); }
+  .task .t { font-weight: 600; color: #1d2333; line-height: 1.35; }
+  .task .m { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; font-size: 9px; color: #8a90a6; }
+  .tag { display: inline-block; font-size: 8.5px; font-weight: 700; border-radius: 5px; padding: 2px 6px; margin-bottom: 6px; }
+  .av { display: inline-flex; } .av span { width: 18px; height: 18px; border-radius: 50%; border: 2px solid #fff; margin-left: -6px; display: grid; place-items: center; font-size: 7.5px; font-weight: 700; color: #fff; }
+</style></head>
+<body><div class="stage">
+  <div class="wall-grid"></div>
+  <div class="glow" style="width:900px;height:520px;left:150px;top:-120px;background:rgba(132,165,242,.42)"></div>
+  <div class="glow" style="width:420px;height:420px;left:860px;top:480px;background:rgba(161,156,215,.25)"></div>
+
+  <div class="scene">
+    <div class="window" style="left:70px;top:110px;width:900px;height:640px;transform:rotateY(10deg) rotateX(3deg);transform-origin:left center">
+      <div class="chrome"><b></b><b></b><b></b><span class="url">hailo · projects / summer-expo</span></div>
+      <div class="row" style="height:calc(100% - 38px);align-items:stretch">
+        <div class="side col" style="width:160px;padding:14px 10px;gap:2px;border-right:1px solid #eceef4;background:#fbfbfd">
+          <div class="row" style="gap:8px;padding:0 8px 14px"><div style="width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--p2),var(--p))"></div><b style="font-size:14px;color:#1d2333">Hailo</b></div>
+          <a><i></i>Overview</a><a class="on"><i></i>Projects</a><a><i></i>Teams</a><a><i></i>Finance</a><a><i></i>Procurement</a><a><i></i>HR &amp; leave</a><a><i></i>Payroll</a><a><i></i>Reports</a>
+        </div>
+        <div style="flex:1;padding:16px 18px;background:#f6f7fb">
+          <div class="row" style="justify-content:space-between">
+            <div><div class="muted" style="font-size:10px">Projects / Dubai · Riyadh · London</div><div style="font-weight:800;font-size:18px;color:#141a2e;margin-top:2px">Summer Expo 2026</div></div>
+            <div class="row" style="gap:10px">
+              <div class="av"><span style="background:#5173cc">AK</span><span style="background:#e0784f">SR</span><span style="background:#2fa574">MJ</span><span style="background:#a77bd8">+9</span></div>
+              <span class="pill" style="background:var(--p);color:#fff;padding:6px 12px">+ Task</span>
+            </div>
+          </div>
+          <div class="row" style="gap:14px;margin-top:12px;font-size:10.5px;color:#8a90a6;border-bottom:1px solid #e6e8ef;padding-bottom:8px">
+            <span style="color:var(--p);font-weight:700;border-bottom:2px solid var(--p);padding-bottom:7px;margin-bottom:-9px">Board</span><span>Timeline</span><span>Budget</span><span>Vendors</span><span>Files</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 0.95fr;gap:12px;margin-top:14px">
+            <div>
+              <div class="colh">To do <em>6</em></div>
+              <div class="task"><span class="tag" style="background:#fff1e6;color:#c2621b">Logistics</span><div class="t">Confirm stage rigging with venue</div><div class="m"><span>Due 12 Jun</span><div class="av"><span style="background:#e0784f">SR</span></div></div></div>
+              <div class="task"><span class="tag" style="background:#eef3ff;color:var(--p)">Procurement</span><div class="t">Approve AV vendor quote</div><div class="m"><span>PO-1042</span><div class="av"><span style="background:#5173cc">AK</span></div></div></div>
+              <div class="task"><span class="tag" style="background:#f3ecff;color:#7c4fc4">HR</span><div class="t">Staff rota for build days</div><div class="m"><span>18 staff</span><div class="av"><span style="background:#a77bd8">LN</span></div></div></div>
+            </div>
+            <div>
+              <div class="colh">In progress <em>4</em></div>
+              <div class="task"><span class="tag" style="background:#e8f7f0;color:#1f8a5b">Finance</span><div class="t">Sponsor invoices batch 2</div><div style="height:4px;border-radius:4px;background:#eef0f5;margin-top:8px"><div style="width:65%;height:100%;border-radius:4px;background:#2fa574"></div></div><div class="m"><span>65%</span><div class="av"><span style="background:#2fa574">MJ</span><span style="background:#5173cc">AK</span></div></div></div>
+              <div class="task"><span class="tag" style="background:#fff1e6;color:#c2621b">Logistics</span><div class="t">Freight from Riyadh warehouse</div><div class="m"><span>In transit</span><div class="av"><span style="background:#e0784f">SR</span></div></div></div>
+            </div>
+            <div>
+              <div class="colh">Done <em>11</em></div>
+              <div class="task" style="opacity:.75"><div class="t" style="text-decoration:line-through;color:#8a90a6">Venue contract signed</div><div class="m"><span>3 May</span><div class="av"><span style="background:#5173cc">AK</span></div></div></div>
+              <div class="task" style="opacity:.75"><div class="t" style="text-decoration:line-through;color:#8a90a6">Catering shortlist</div><div class="m"><span>8 May</span><div class="av"><span style="background:#2fa574">MJ</span></div></div></div>
+            </div>
+            <div class="task" style="padding:12px">
+              <div style="font-weight:700;font-size:11px;color:#1d2333">Budget</div>
+              <div style="position:relative;width:104px;height:104px;margin:12px auto 8px;border-radius:50%;background:conic-gradient(var(--p) 0 46%, var(--p2) 46% 68%, #2fa574 68% 82%, #eef0f5 82%)"><div style="position:absolute;inset:16px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center"><div><b style="font-size:15px">82%</b><div class="muted" style="font-size:8.5px">of $1.2M</div></div></div></div>
+              <div class="row" style="justify-content:space-between;font-size:9px;margin-top:6px"><span><b style="color:var(--p)">●</b> Venue</span><span>$552k</span></div>
+              <div class="row" style="justify-content:space-between;font-size:9px;margin-top:4px"><span><b style="color:var(--p2)">●</b> Production</span><span>$264k</span></div>
+              <div class="row" style="justify-content:space-between;font-size:9px;margin-top:4px"><span><b style="color:#2fa574">●</b> Staff</span><span>$168k</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- realtime toast -->
+    <div class="float" style="left:800px;top:50px;width:320px;padding:14px;transform:translateZ(140px) rotateY(-8deg)">
+      <div class="row" style="gap:10px">
+        <div class="avatar" style="width:34px;height:34px;background:#e0784f;font-size:11px">SR</div>
+        <div style="flex:1"><div style="font-size:11.5px;line-height:1.4"><b>Sara R.</b> approved <b style="color:#5173cc">PO-1042</b> for AV equipment</div><div class="muted" style="font-size:9.5px;margin-top:2px">Just now · Procurement</div></div>
+        <span style="width:8px;height:8px;border-radius:50%;background:#2fa574;box-shadow:0 0 0 4px rgba(47,165,116,.18)"></span>
+      </div>
+    </div>
+
+    <!-- presence -->
+    <div class="float dark" style="left:860px;top:600px;width:260px;padding:14px 16px;transform:translateZ(140px) rotateY(-8deg)">
+      <div style="font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#8e96b4">Live on this project</div>
+      <div class="row" style="gap:8px;margin-top:10px">
+        <div class="av"><span style="background:#5173cc;border-color:#1a1c26;width:28px;height:28px;font-size:9px;margin-left:0">AK</span><span style="background:#e0784f;border-color:#1a1c26;width:28px;height:28px;font-size:9px">SR</span><span style="background:#2fa574;border-color:#1a1c26;width:28px;height:28px;font-size:9px">MJ</span><span style="background:#a77bd8;border-color:#1a1c26;width:28px;height:28px;font-size:9px">LN</span></div>
+        <span style="font-size:11px;color:#c9cfe4"><b style="color:#fff">4 online</b> · 3 countries</span>
+      </div>
+    </div>
+  </div>
+</div></body></html>

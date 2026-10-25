@@ -1,14 +1,6 @@
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaArrowUp } from "react-icons/fa";
 import { SiUpwork } from "react-icons/si";
 import { personalInfo } from "@/data/portfolio";
-
-const navLinks = [
-  { name: "Work", href: "#projects" },
-  { name: "Services", href: "#services" },
-  { name: "Experience", href: "#experience" },
-  { name: "FAQ", href: "#faq" },
-  { name: "Contact", href: "#contact" },
-];
 
 const socials = [
   { href: personalInfo.social.linkedin, icon: FaLinkedin, label: "LinkedIn" },
@@ -18,26 +10,13 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="relative z-10 border-t border-white/[0.07] bg-[#050814]/80 py-12 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-          <div>
-            <a href="#home" className="text-lg font-extrabold tracking-tight text-white">
-              {personalInfo.name.split(" ")[0]}
-              <span className="gradient-text"> {personalInfo.name.split(" ")[1]}</span>
-            </a>
-            <p className="mt-2 text-sm text-muted">{personalInfo.title} · {personalInfo.location}</p>
-          </div>
-
-          <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2">
-            {navLinks.map((link) => (
-              <a key={link.name} href={link.href} className="text-sm text-muted hover:text-white transition-colors">
-                {link.name}
-              </a>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-3">
+    <footer className="border-t border-white/[0.08] py-10">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <p className="text-sm text-muted">
+          &copy; {new Date().getFullYear()} {personalInfo.name} · {personalInfo.location}
+        </p>
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2">
             {socials.map(({ href, icon: Icon, label }) => (
               <a
                 key={label}
@@ -45,17 +24,16 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-muted hover:border-cyan-400/40 hover:text-white transition-colors"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-muted transition-colors hover:border-white/30 hover:text-white"
               >
-                <Icon size={17} />
+                <Icon size={15} />
               </a>
             ))}
           </div>
+          <a href="#home" className="inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-white">
+            Back to top <FaArrowUp size={11} />
+          </a>
         </div>
-
-        <p className="mt-10 border-t border-white/[0.07] pt-6 text-sm text-muted">
-          &copy; {new Date().getFullYear()} {personalInfo.name}. All rights reserved.
-        </p>
       </div>
     </footer>
   );

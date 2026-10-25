@@ -1,0 +1,274 @@
+/* Shared building blocks for the project cover scenes.
+   Every cover is a 1200x900 stage rendered at 2x by design/render.mjs. */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=block");
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 1200px;
+  height: 900px;
+  overflow: hidden;
+  background: #000;
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.stage {
+  position: relative;
+  width: 1200px;
+  height: 900px;
+  overflow: hidden;
+  background: var(--bg, #0b0b0f);
+  isolation: isolate;
+}
+
+/* Film grain and vignette sit on top of everything */
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.09;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 49;
+  pointer-events: none;
+  background: radial-gradient(120% 95% at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.55));
+}
+
+.abs { position: absolute; }
+.glow { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+.scene { position: absolute; inset: 0; perspective: 2200px; transform-style: preserve-3d; }
+
+/* Subtle studio wall lines */
+.wall-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+}
+
+/* ---------- Pedestal ---------- */
+.pedestal {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--pw, 760px);
+  height: 150px;
+}
+.pedestal .top {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 35%, var(--ped-hi, #3b3b44) 0%, var(--ped, #15151a) 62%, #070709 100%);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -10px 30px rgba(0, 0, 0, 0.6);
+}
+.pedestal .side {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 55px;
+  height: 80px;
+  border-radius: 0 0 50% 50% / 0 0 60% 60%;
+  background: linear-gradient(180deg, #0d0d11, #050506);
+  z-index: -1;
+  box-shadow: 0 60px 90px rgba(0, 0, 0, 0.85);
+}
+.pedestal .rim {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 110px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--rim, rgba(255, 210, 150, 0.35)), 0 0 40px var(--rim, rgba(255, 210, 150, 0.25));
+}
+
+/* ---------- Phone ---------- */
+.phone {
+  position: absolute;
+  width: 280px;
+  height: 590px;
+  border-radius: 48px;
+  padding: 11px;
+  background: linear-gradient(145deg, #3a3a40 0%, #121215 22%, #0a0a0c 60%, #2a2a30 100%);
+  box-shadow:
+    inset 0 0 0 1.5px rgba(255, 255, 255, 0.22),
+    inset 0 0 0 5px #0b0b0d,
+    0 60px 90px -25px rgba(0, 0, 0, 0.85),
+    0 25px 40px -20px rgba(0, 0, 0, 0.7);
+}
+.phone .screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 38px;
+  overflow: hidden;
+  background: #fff;
+  color: #111;
+  font-size: 11px;
+}
+.phone .screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.04) 28%, transparent 40%);
+}
+.island {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 86px;
+  height: 25px;
+  border-radius: 20px;
+  background: #000;
+  z-index: 5;
+}
+.status {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 24px 0 28px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.status .icons { display: flex; gap: 5px; align-items: center; }
+.status .icons i { display: block; height: 8px; opacity: 0.9; }
+.status .icons i:nth-child(1) { width: 13px; background: linear-gradient(90deg, currentColor 0 2.5px, transparent 2.5px 3.5px, currentColor 3.5px 6px, transparent 6px 7px, currentColor 7px 9.5px, transparent 9.5px 10.5px, currentColor 10.5px); clip-path: polygon(0 75%, 25% 75%, 25% 50%, 52% 50%, 52% 25%, 79% 25%, 79% 0, 100% 0, 100% 100%, 0 100%); }
+.status .icons i:nth-child(2) { width: 11px; height: 8px; border-radius: 8px 8px 0 0; background: radial-gradient(circle at 50% 100%, currentColor 0 2px, transparent 2.5px 4px, currentColor 4px 5.5px, transparent 6px 7.5px, currentColor 7.5px 9px, transparent 9.5px); }
+.status .icons i:nth-child(3) { width: 20px; height: 9px; border-radius: 3px; border: 1.2px solid currentColor; background: linear-gradient(90deg, currentColor 70%, transparent 70%) content-box; padding: 1.2px; opacity: 0.85; }
+
+/* ---------- Laptop ---------- */
+.laptop { position: absolute; width: 880px; }
+.laptop .lid {
+  position: relative;
+  border-radius: 22px 22px 6px 6px;
+  padding: 16px 16px 22px;
+  background: linear-gradient(180deg, #1b1b1f, #0b0b0d);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.12), 0 40px 80px -30px rgba(0, 0, 0, 0.9);
+}
+.laptop .lid::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: 50%;
+  background: #222;
+}
+.laptop .display {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+.laptop .display::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(112deg, rgba(255, 255, 255, 0.14) 0%, transparent 32%);
+}
+.laptop .base {
+  position: relative;
+  height: 20px;
+  margin: 0 -7%;
+  border-radius: 2px 2px 18px 18px;
+  background: linear-gradient(180deg, #d9dce2 0%, #a9adb5 45%, #6c7078 100%);
+  box-shadow: 0 30px 50px -10px rgba(0, 0, 0, 0.8);
+}
+.laptop .base::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 130px;
+  height: 8px;
+  margin-left: -65px;
+  border-radius: 0 0 10px 10px;
+  background: linear-gradient(180deg, #8e929a, #b8bcc4);
+}
+
+/* ---------- Browser / app window ---------- */
+.window {
+  position: absolute;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 50px 100px -30px rgba(0, 0, 0, 0.9),
+    0 20px 40px -20px rgba(0, 0, 0, 0.6);
+}
+.chrome {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  background: #f1f2f5;
+  border-bottom: 1px solid #e3e5ea;
+}
+.chrome.dark { background: #15161b; border-bottom-color: #23252c; }
+.chrome b { width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; }
+.chrome b:nth-child(2) { background: #febc2e; }
+.chrome b:nth-child(3) { background: #28c840; }
+.chrome .url {
+  margin-left: 18px;
+  height: 22px;
+  flex: 0 1 340px;
+  border-radius: 7px;
+  background: #fff;
+  border: 1px solid #e3e5ea;
+  font-size: 11px;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+.chrome.dark .url { background: #0c0d11; border-color: #2a2c34; color: #7d818e; }
+
+/* ---------- Floating card ---------- */
+.float {
+  position: absolute;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.04),
+    0 40px 80px -24px rgba(0, 0, 0, 0.75),
+    0 14px 28px -14px rgba(0, 0, 0, 0.5);
+}
+.float.dark {
+  background: rgba(22, 23, 30, 0.92);
+  color: #e8e9ee;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    0 40px 80px -24px rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(14px);
+}
+
+/* ---------- Small UI atoms ---------- */
+.row { display: flex; align-items: center; }
+.col { display: flex; flex-direction: column; }
+.pill { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 3px 9px; font-size: 10px; font-weight: 600; }
+.avatar { border-radius: 50%; flex: none; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; color: #fff; }
+.mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.muted { color: #6b7280; }

@@ -1,0 +1,129 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="kit.css">
+<style>
+  .stage { --bg: radial-gradient(90% 80% at 50% 30%, #2a1708 0%, #120a05 45%, #070403 100%); }
+  .brand { font-family: Georgia, "Times New Roman", serif; font-weight: 700; letter-spacing: -0.01em; }
+  .logo { width: 22px; height: 14px; position: relative; flex: none; }
+  .logo::before, .logo::after { content: ""; position: absolute; top: 0; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #3b6fd8; }
+  .logo::before { left: 0; } .logo::after { left: 8px; border-color: #7aa2ee; }
+  .screen { background: #faf8f5 !important; }
+  .card { background: #fff; border-radius: 16px; box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 6px 16px -8px rgba(60,40,20,.25); }
+  .photo { border-radius: 12px; position: relative; overflow: hidden; }
+  .p1 { background: linear-gradient(180deg, #f6c27a 0%, #e98d4f 45%, #6b3a2a 46%, #3a2018 100%); }
+  .p1::after { content:""; position:absolute; left:18%; bottom:30%; width:30%; height:30%; background:#2a1712; clip-path: polygon(0 100%, 0 40%, 50% 0, 100% 40%, 100% 100%); }
+  .p2 { background: linear-gradient(180deg, #9fc4d8 0%, #d8e6e9 50%, #7a9a6b 51%, #4f6b44 100%); }
+  .p3 { background: radial-gradient(circle at 35% 40%, #ffe3b0 0 12%, transparent 13%), linear-gradient(160deg, #c9864f, #6a3b25); }
+  .p4 { background: linear-gradient(200deg, #e8d5c0, #b48a6a 60%, #6d4c3a); }
+  .p5 { background: linear-gradient(180deg, #f4d7a8 0%, #f2a65e 50%, #b0563a 100%); }
+  .p6 { background: linear-gradient(180deg, #2d3b55, #4a5f80 50%, #c58b5d 51%, #7b4c33); }
+  .wave { display: flex; align-items: center; gap: 2.5px; height: 28px; }
+  .wave i { display: block; width: 3px; border-radius: 2px; background: #3b6fd8; }
+  .tab { display:flex; justify-content: space-around; position:absolute; bottom:0; left:0; right:0; height:62px; padding-top:10px; background:#fff; border-top:1px solid #eee; font-size:9px; color:#9a948d; }
+  .tab span { display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .tab span i { width:18px; height:18px; border-radius:6px; border:1.6px solid currentColor; display:block; }
+  .tab .on { color:#3b6fd8; }
+</style></head>
+<body><div class="stage">
+  <div class="glow" style="width:900px;height:520px;left:150px;top:40px;background:rgba(255,150,60,.42)"></div>
+  <div class="glow" style="width:420px;height:420px;left:390px;top:180px;background:rgba(255,200,120,.35);filter:blur(70px)"></div>
+  <div class="glow" style="width:700px;height:160px;left:250px;top:700px;background:rgba(255,140,50,.35);filter:blur(60px)"></div>
+
+  <!-- light shafts -->
+  <div class="abs" style="left:300px;top:-120px;width:600px;height:900px;background:conic-gradient(from 180deg at 50% 0%, transparent 160deg, rgba(255,210,150,.12) 175deg, rgba(255,220,170,.16) 180deg, rgba(255,210,150,.12) 185deg, transparent 200deg);filter:blur(8px)"></div>
+
+  <div class="pedestal" style="top:660px;--pw:860px;--ped-hi:#4a3a2c;--ped:#1a120c;--rim:rgba(255,190,120,.55)">
+    <div class="side"></div><div class="top"></div><div class="rim"></div>
+  </div>
+
+  <div class="scene">
+    <!-- LEFT: memories vault -->
+    <div class="phone" style="left:170px;top:160px;transform:rotateY(28deg) rotateZ(-2deg) scale(.9);transform-origin:right bottom;filter:brightness(.82)">
+      <div class="screen">
+        <div class="island"></div>
+        <div class="status"><span>9:41</span><span class="icons"><i></i><i></i><i></i></span></div>
+        <div style="padding:6px 16px">
+          <div class="row" style="justify-content:space-between"><div class="brand" style="font-size:19px">Memories Vault</div><div class="avatar" style="width:26px;height:26px;background:#d9cbbd;color:#6b5240;font-size:10px">SK</div></div>
+          <div class="row" style="gap:6px;margin:12px 0">
+            <span class="pill" style="background:#1d1b19;color:#fff">All</span>
+            <span class="pill" style="background:#efe9e2;color:#6b5f55">Family</span>
+            <span class="pill" style="background:#efe9e2;color:#6b5f55">Travel</span>
+            <span class="pill" style="background:#efe9e2;color:#6b5f55">Voice</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+            <div><div class="photo p1" style="height:118px"></div><div style="font-weight:600;font-size:11px;margin-top:6px">The old house</div><div class="muted" style="font-size:9px">1994 · 3 voices</div></div>
+            <div><div class="photo p2" style="height:118px"></div><div style="font-weight:600;font-size:11px;margin-top:6px">Lake weekend</div><div class="muted" style="font-size:9px">2008 · 2 voices</div></div>
+            <div><div class="photo p3" style="height:118px"></div><div style="font-weight:600;font-size:11px;margin-top:6px">Mum's kitchen</div><div class="muted" style="font-size:9px">1999 · 5 voices</div></div>
+            <div><div class="photo p4" style="height:118px"></div><div style="font-weight:600;font-size:11px;margin-top:6px">Graduation</div><div class="muted" style="font-size:9px">2016 · 1 voice</div></div>
+          </div>
+        </div>
+        <div class="tab"><span><i></i>Home</span><span class="on"><i></i>Vault</span><span><i></i>My AI</span><span><i></i>People</span></div>
+      </div>
+    </div>
+
+    <!-- RIGHT: AI chat -->
+    <div class="phone" style="left:750px;top:160px;transform:rotateY(-28deg) rotateZ(2deg) scale(.9);transform-origin:left bottom;filter:brightness(.82)">
+      <div class="screen">
+        <div class="island"></div>
+        <div class="status"><span>9:41</span><span class="icons"><i></i><i></i><i></i></span></div>
+        <div class="row" style="gap:9px;padding:6px 16px 12px;border-bottom:1px solid #eee">
+          <div class="avatar" style="width:32px;height:32px;background:linear-gradient(135deg,#3b6fd8,#9cb8f0);font-size:11px">G</div>
+          <div><div style="font-weight:700;font-size:12px">Grandpa Yusuf</div><div style="font-size:9px;color:#2f9e6a">AI voice · from 41 memories</div></div>
+        </div>
+        <div class="col" style="gap:10px;padding:14px">
+          <div style="align-self:flex-end;max-width:78%;background:#3b6fd8;color:#fff;padding:9px 11px;border-radius:14px 14px 4px 14px;font-size:10.5px;line-height:1.45">What was the farm like when you were young?</div>
+          <div style="max-width:84%;background:#fff;padding:10px 11px;border-radius:14px 14px 14px 4px;font-size:10.5px;line-height:1.5;box-shadow:0 2px 8px rgba(0,0,0,.06)">We woke before the sun. Your great-grandmother made tea on the clay stove while we walked the orchard rows...</div>
+          <div class="row" style="gap:8px;max-width:84%;background:#fff;padding:8px 10px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.06)">
+            <div class="avatar" style="width:22px;height:22px;background:#3b6fd8;font-size:9px">▶</div>
+            <div class="wave" style="height:18px"><i style="height:6px"></i><i style="height:12px"></i><i style="height:16px"></i><i style="height:9px"></i><i style="height:14px"></i><i style="height:7px"></i><i style="height:15px"></i><i style="height:10px"></i><i style="height:5px"></i><i style="height:12px"></i><i style="height:8px"></i><i style="height:14px"></i></div>
+            <span class="muted" style="font-size:9px">0:42</span>
+          </div>
+          <div class="photo p5" style="height:96px;max-width:84%;width:84%"></div>
+        </div>
+        <div class="abs row" style="left:12px;right:12px;bottom:18px;height:40px;border-radius:20px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:0 14px;font-size:10px;color:#9a948d;justify-content:space-between">Ask about a memory…<span class="avatar" style="width:26px;height:26px;background:#1d1b19;font-size:10px">↑</span></div>
+      </div>
+    </div>
+
+    <!-- CENTER: home -->
+    <div class="phone" style="left:460px;top:95px;z-index:3">
+      <div class="screen">
+        <div class="island"></div>
+        <div class="status"><span>9:41</span><span class="icons"><i></i><i></i><i></i></span></div>
+        <div style="padding:4px 16px">
+          <div class="row" style="justify-content:space-between">
+            <div class="row" style="gap:7px"><span class="logo"></span><span class="brand" style="font-size:14px">CoreMemories AI</span></div>
+            <div class="avatar" style="width:26px;height:26px;background:#d9cbbd;color:#6b5240;font-size:10px">SK</div>
+          </div>
+          <div style="margin-top:16px;font-size:10px" class="muted">Good evening, Sara</div>
+          <div class="brand" style="font-size:22px;line-height:1.15;margin-top:3px">Today's memory prompt</div>
+
+          <div class="card" style="margin-top:12px;padding:14px;background:linear-gradient(160deg,#1f2d4f,#3b6fd8);color:#fff">
+            <div style="font-size:9px;opacity:.75;letter-spacing:.08em;text-transform:uppercase">Prompt 12 of 30</div>
+            <div class="brand" style="font-size:15px;line-height:1.3;margin-top:6px">"Tell me about the first home you remember."</div>
+            <div class="row" style="gap:10px;margin-top:14px">
+              <div class="avatar" style="width:38px;height:38px;background:#fff;color:#e2483d;font-size:14px;box-shadow:0 0 0 6px rgba(255,255,255,.18)">●</div>
+              <div class="wave"><i style="height:8px;background:#fff"></i><i style="height:18px;background:#fff"></i><i style="height:26px;background:#fff"></i><i style="height:12px;background:#fff"></i><i style="height:22px;background:#fff"></i><i style="height:9px;background:#fff"></i><i style="height:24px;background:#fff"></i><i style="height:14px;background:#fff"></i><i style="height:6px;background:#fff;opacity:.5"></i><i style="height:6px;background:#fff;opacity:.5"></i><i style="height:6px;background:#fff;opacity:.5"></i></div>
+              <span style="font-size:10px;font-weight:600">1:24</span>
+            </div>
+          </div>
+
+          <div class="row" style="justify-content:space-between;margin:16px 0 8px"><b style="font-size:12px">Recently saved</b><span style="font-size:9.5px;color:#3b6fd8;font-weight:600">See all</span></div>
+          <div class="row" style="gap:9px">
+            <div class="photo p6" style="width:80px;height:80px"></div>
+            <div class="photo p1" style="width:80px;height:80px"></div>
+            <div class="photo p3" style="width:80px;height:80px"></div>
+          </div>
+
+          <div class="card row" style="gap:10px;padding:11px;margin-top:12px">
+            <div class="avatar" style="width:32px;height:32px;background:#e7f5ee;color:#2f9e6a;font-size:13px">✓</div>
+            <div style="flex:1"><div style="font-weight:700;font-size:11px">Your AI voice is ready</div><div class="muted" style="font-size:9px">Trained from 5 recorded phrases</div></div>
+            <span class="pill" style="background:#1d1b19;color:#fff">Listen</span>
+          </div>
+        </div>
+        <div class="tab"><span class="on"><i></i>Home</span><span><i></i>Vault</span><span><i></i>My AI</span><span><i></i>People</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- floor reflection -->
+  <div class="abs" style="left:0;right:0;top:770px;height:130px;background:linear-gradient(180deg,rgba(0,0,0,0),#050302 80%);z-index:4"></div>
+</div></body></html>
