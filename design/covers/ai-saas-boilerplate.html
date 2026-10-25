@@ -1,0 +1,84 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="kit.css">
+<style>
+  .stage { --bg: radial-gradient(100% 90% at 40% 20%, #1d3313 0%, #0c160a 45%, #040703 100%); }
+  .code { font-family: "JetBrains Mono", monospace; font-size: 11.5px; line-height: 1.75; color: #c9d1d9; white-space: pre; }
+  .ln { color: #4b5563; display: inline-block; width: 26px; text-align: right; margin-right: 14px; }
+  .k { color: #ff7b9c; } .f { color: #c3e88d; } .s { color: #a5d6ff; } .c { color: #6b7280; } .d { color: #ffcb6b; } .t { color: #89ddff; }
+  .tabx { padding: 8px 14px; font-size: 10.5px; color: #7d8590; border-right: 1px solid #22272e; }
+  .tabx.on { color: #e6edf3; background: #0d1117; border-top: 2px solid #a3e635; }
+  .plan { border-radius: 14px; padding: 14px; font-size: 10.5px; }
+</style></head>
+<body><div class="stage">
+  <div class="wall-grid"></div>
+  <div class="glow" style="width:820px;height:520px;left:60px;top:-120px;background:rgba(163,230,53,.28)"></div>
+  <div class="glow" style="width:520px;height:420px;left:760px;top:440px;background:rgba(34,211,238,.18)"></div>
+
+  <div class="scene">
+    <!-- editor -->
+    <div class="window" style="left:60px;top:90px;width:720px;height:600px;background:#0d1117;transform:rotateY(14deg);transform-origin:left center">
+      <div class="chrome dark" style="background:#161b22"><b></b><b></b><b></b><span class="url">ai-saas-starter — backend/app/api/chat.py</span></div>
+      <div class="row" style="background:#161b22;border-bottom:1px solid #22272e">
+        <span class="tabx on">chat.py</span><span class="tabx">billing.py</span><span class="tabx">ChatPanel.tsx</span><span class="tabx">docker-compose.yml</span>
+      </div>
+      <div class="code" style="padding:14px 0 0"><span class="ln">1</span><span class="k">from</span> fastapi <span class="k">import</span> APIRouter, Depends
+<span class="ln">2</span><span class="k">from</span> app.core.auth <span class="k">import</span> current_user
+<span class="ln">3</span><span class="k">from</span> app.services <span class="k">import</span> llm, usage
+<span class="ln">4</span>
+<span class="ln">5</span>router = APIRouter(prefix=<span class="s">"/chat"</span>)
+<span class="ln">6</span>
+<span class="ln">7</span><span class="d">@router.post</span>(<span class="s">"/"</span>)
+<span class="ln">8</span><span class="k">async def</span> <span class="f">send_message</span>(body: <span class="t">ChatIn</span>, user=Depends(current_user)):
+<span class="ln">9</span>    <span class="c"># plan limits come from the Stripe subscription</span>
+<span class="ln">10</span>    <span class="k">await</span> usage.<span class="f">check_quota</span>(user)
+<span class="ln">11</span>
+<span class="ln">12</span>    reply = <span class="k">await</span> llm.<span class="f">complete</span>(
+<span class="ln">13</span>        model=user.plan.model,
+<span class="ln">14</span>        messages=body.history,
+<span class="ln">15</span>        stream=<span class="k">True</span>,
+<span class="ln">16</span>    )
+<span class="ln">17</span>    <span class="k">await</span> usage.<span class="f">record_tokens</span>(user, reply.usage)
+<span class="ln">18</span>    <span class="k">return</span> reply.<span class="f">stream</span>()</div>
+      <div class="abs" style="left:0;right:0;bottom:0;height:178px;background:#0a0d12;border-top:1px solid #22272e">
+        <div class="row" style="gap:16px;padding:8px 14px;font-size:10px;color:#7d8590;border-bottom:1px solid #1b2028"><span style="color:#e6edf3;border-bottom:1.5px solid #a3e635;padding-bottom:6px;margin-bottom:-9px">TERMINAL</span><span>PROBLEMS</span><span>OUTPUT</span></div>
+        <div class="code" style="font-size:10.5px;line-height:1.7;padding:8px 14px"><span style="color:#a3e635">❯</span> docker compose up
+<span style="color:#7d8590">[+] Running 4/4</span>
+ <span style="color:#a3e635">✔</span> postgres   <span style="color:#7d8590">Healthy</span>      <span style="color:#a3e635">✔</span> api      <span style="color:#7d8590">Started :8000</span>
+ <span style="color:#a3e635">✔</span> web        <span style="color:#7d8590">Started :5173</span> <span style="color:#a3e635">✔</span> stripe   <span style="color:#7d8590">Listening for webhooks</span>
+<span style="color:#7dd3fc">INFO</span>  Application startup complete.</div>
+      </div>
+    </div>
+
+    <!-- pricing cards -->
+    <div class="float" style="left:700px;top:120px;width:220px;transform:translateZ(120px) rotateY(-10deg)">
+      <div class="plan">
+        <div class="muted" style="font-weight:600">Starter</div>
+        <div style="font-size:26px;font-weight:800;margin-top:4px">$9<span style="font-size:11px;color:#6b7280;font-weight:500">/mo</span></div>
+        <div class="muted" style="margin-top:6px;line-height:1.6">50k tokens · GPT-4o mini<br>Email support</div>
+        <div style="margin-top:12px;height:32px;border-radius:9px;border:1px solid #e5e7eb;display:grid;place-items:center;font-weight:700">Start 7-day trial</div>
+      </div>
+    </div>
+    <div class="float" style="left:900px;top:90px;width:230px;background:#111827;color:#f3f4f6;transform:translateZ(160px) rotateY(-10deg)">
+      <div class="plan">
+        <div class="row" style="justify-content:space-between"><b style="color:#a3e635">Pro</b><span class="pill" style="background:#a3e635;color:#111">Popular</span></div>
+        <div style="font-size:26px;font-weight:800;margin-top:4px">$29<span style="font-size:11px;color:#9ca3af;font-weight:500">/mo</span></div>
+        <div style="margin-top:6px;line-height:1.6;color:#9ca3af">500k tokens · GPT-4o<br>Admin analytics</div>
+        <div style="margin-top:12px;height:32px;border-radius:9px;background:#a3e635;color:#111;display:grid;place-items:center;font-weight:800">Upgrade</div>
+      </div>
+    </div>
+
+    <!-- token usage -->
+    <div class="float" style="left:780px;top:420px;width:330px;padding:16px;transform:translateZ(140px) rotateY(-10deg)">
+      <div class="row" style="justify-content:space-between"><b style="font-size:12px">Token usage</b><span class="muted" style="font-size:10px">Admin · last 7 days</span></div>
+      <div class="row" style="gap:6px;align-items:flex-end;height:90px;margin-top:12px">
+        <i style="flex:1;height:35%;border-radius:4px;background:#d9f99d"></i><i style="flex:1;height:52%;border-radius:4px;background:#bef264"></i><i style="flex:1;height:44%;border-radius:4px;background:#bef264"></i><i style="flex:1;height:68%;border-radius:4px;background:#a3e635"></i><i style="flex:1;height:60%;border-radius:4px;background:#a3e635"></i><i style="flex:1;height:85%;border-radius:4px;background:#84cc16"></i><i style="flex:1;height:100%;border-radius:4px;background:#65a30d"></i>
+      </div>
+      <div class="row muted" style="justify-content:space-between;font-size:9px;margin-top:6px"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+      <div class="row" style="gap:18px;margin-top:12px;padding-top:10px;border-top:1px solid #f0f1f3;font-size:10.5px">
+        <div><div class="muted" style="font-size:9.5px">Users</div><b style="font-size:15px">1,942</b></div>
+        <div><div class="muted" style="font-size:9.5px">MRR</div><b style="font-size:15px">$8.4k</b></div>
+        <div><div class="muted" style="font-size:9.5px">Tokens</div><b style="font-size:15px">12.6M</b></div>
+      </div>
+    </div>
+  </div>
+</div></body></html>

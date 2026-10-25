@@ -3,103 +3,106 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaGooglePlay, FaApple, FaExternalLinkAlt, FaChevronDown } from "react-icons/fa";
+import { FaGooglePlay, FaApple, FaChevronDown } from "react-icons/fa";
+import { FiArrowUpRight } from "react-icons/fi";
 import { projects, type Project, type BadgeTone } from "@/data/portfolio";
 import SectionHeading from "./SectionHeading";
-import ProjectVisual from "./ProjectVisual";
 
-const INITIAL_COUNT = 6;
+export const INITIAL_COUNT = 7;
 
-const badgeTone: Record<BadgeTone, string> = {
-  live: "border-emerald-400/50 text-emerald-300",
-  store: "border-sky-400/50 text-sky-300",
-  ai: "border-violet-400/55 text-violet-300",
-  private: "border-amber-300/50 text-amber-200",
-  neutral: "border-white/25 text-slate-100",
+const badgeDot: Record<BadgeTone, string> = {
+  live: "bg-emerald-400",
+  store: "bg-sky-400",
+  ai: "bg-violet-400",
+  private: "bg-amber-300",
+  neutral: "bg-white/60",
 };
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+const linkClass =
+  "inline-flex items-center gap-1.5 text-sm font-semibold text-white transition-colors hover:text-accent";
+
+function ProjectLinks({ project }: { project: Project }) {
+  return (
+    <>
+      {project.liveUrl && (
+        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+          Live site <FiArrowUpRight />
+        </a>
+      )}
+      {project.appStoreUrl && (
+        <a href={project.appStoreUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+          <FaApple size={14} /> App Store
+        </a>
+      )}
+      {project.playStoreUrl && (
+        <a href={project.playStoreUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+          <FaGooglePlay size={12} /> Google Play
+        </a>
+      )}
+    </>
+  );
+}
+
+function ProjectCard({ project, index, featured }: { project: Project; index: number; featured?: boolean }) {
   const [open, setOpen] = useState(false);
-  const [shot, setShot] = useState(0);
-  const shots = [project.image, ...(project.gallery ?? [])].filter(Boolean);
   const number = String(index + 1).padStart(2, "0");
   const detailsId = `project-details-${project.id}`;
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 28 }}
+      id={`project-${project.id}`}
+      initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay: (index % 2) * 0.08 }}
-      className="card group flex flex-col overflow-hidden"
+      transition={{ duration: 0.6, delay: featured ? 0 : (index % 2) * 0.08 }}
+      className={`group overflow-hidden rounded-[22px] border border-white/[0.08] bg-ink-2 transition-colors hover:border-white/20 ${
+        featured ? "grid lg:col-span-2 lg:grid-cols-[1.12fr_1fr]" : "flex flex-col"
+      }`}
     >
-      {/* Visual */}
-      <div className="relative aspect-[16/10] overflow-hidden bg-[#0a1024]">
-        {shots.length > 0 ? (
-          <Image
-            src={shots[shot]}
-            alt={`${project.title} screenshot`}
-            fill
-            sizes="(max-width: 1024px) 100vw, 560px"
-            className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
-          />
-        ) : (
-          <ProjectVisual kind={project.kind} index={index} />
-        )}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0f1f] via-transparent to-black/30" />
-
-        <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-[#070b1a]/85 px-3 py-1 font-mono text-xs text-white backdrop-blur">
-          {number}
-        </span>
-        <div className="absolute right-4 top-4 flex flex-wrap justify-end gap-1.5">
+      <div className={`relative aspect-[4/3] overflow-hidden bg-ink-3 ${featured ? "lg:aspect-auto lg:min-h-[460px]" : ""}`}>
+        <Image
+          src={project.image}
+          alt={`${project.title} interface`}
+          fill
+          sizes={featured ? "(max-width: 1024px) 100vw, 620px" : "(max-width: 1024px) 100vw, 560px"}
+          className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+          preload={featured}
+        />
+        <div className="absolute left-4 top-4 flex flex-wrap gap-1.5">
           {project.badges.map((b) => (
             <span
               key={b.label}
-              className={`rounded-full border bg-[#070b1a]/85 px-2.5 py-1 text-[0.7rem] font-semibold backdrop-blur ${badgeTone[b.tone]}`}
+              className="inline-flex items-center gap-1.5 rounded-full bg-black/55 px-2.5 py-1 text-[0.7rem] font-semibold text-white backdrop-blur-md"
             >
+              <span className={`h-1.5 w-1.5 rounded-full ${badgeDot[b.tone]}`} />
               {b.label}
             </span>
           ))}
         </div>
-
-        {shots.length > 1 && (
-          <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5">
-            {shots.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setShot(i)}
-                aria-label={`Show screenshot ${i + 1}`}
-                className={`h-1.5 rounded-full transition-all ${
-                  i === shot ? "w-6 bg-white" : "w-1.5 bg-white/45 hover:bg-white/70"
-                }`}
-              />
-            ))}
-          </div>
-        )}
       </div>
 
-      {/* Body */}
-      <div className="flex flex-1 flex-col p-6 sm:p-7">
-        <p className="eyebrow mb-2">
-          {project.category} <span className="text-muted">· {project.client}</span>
+      <div className={`flex flex-1 flex-col ${featured ? "p-7 sm:p-10 lg:justify-center" : "p-6 sm:p-8"}`}>
+        <p className="text-sm font-bold text-accent">{number}</p>
+        <h3
+          className={`mt-2 font-extrabold tracking-[-0.035em] text-white ${
+            featured ? "text-3xl sm:text-[2.6rem] sm:leading-[1.05]" : "text-2xl sm:text-[1.7rem]"
+          }`}
+        >
+          {project.title}
+        </h3>
+        <p className="mt-1.5 text-sm text-muted">
+          {project.category} · {project.client}
         </p>
-        <h3 className="text-xl font-bold tracking-tight text-white">{project.title}</h3>
-        <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{project.description}</p>
+        <p className={`mt-4 leading-relaxed text-[#c5c4ca] ${featured ? "text-[1.05rem]" : "text-[0.97rem]"}`}>
+          {project.description}
+        </p>
 
-        <div className="mt-5 flex flex-wrap gap-1.5">
-          {project.technologies.slice(0, 6).map((tech) => (
-            <span
-              key={tech}
-              className="rounded-md border border-white/10 bg-white/[0.04] px-2.5 py-1 font-mono text-[0.7rem] text-slate-300"
-            >
+        <div className="mt-5 flex flex-wrap gap-2">
+          {project.technologies.slice(0, featured ? 6 : 4).map((tech) => (
+            <span key={tech} className="rounded-full border border-white/15 px-3 py-1 text-[0.8rem] text-white/85">
               {tech}
             </span>
           ))}
-          {project.technologies.length > 6 && (
-            <span className="px-1.5 py-1 font-mono text-[0.7rem] text-muted">
-              +{project.technologies.length - 6}
-            </span>
-          )}
         </div>
 
         <AnimatePresence initial={false}>
@@ -113,8 +116,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               className="overflow-hidden"
             >
               {project.highlights.map((h) => (
-                <li key={h} className="mt-3 flex gap-3 text-sm leading-relaxed text-slate-300 first:mt-5">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
+                <li key={h} className="mt-3 flex gap-3 text-sm leading-relaxed text-[#c5c4ca] first:mt-6">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                   {h}
                 </li>
               ))}
@@ -122,46 +125,17 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           )}
         </AnimatePresence>
 
-        <div className="mt-6 flex flex-wrap items-center gap-2 border-t border-white/[0.07] pt-5">
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1.5 text-xs font-semibold text-white hover:border-cyan-400/50 hover:bg-white/5 transition-colors"
-            >
-              <FaExternalLinkAlt size={10} /> Live site
-            </a>
-          )}
-          {project.appStoreUrl && (
-            <a
-              href={project.appStoreUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1.5 text-xs font-semibold text-white hover:border-cyan-400/50 hover:bg-white/5 transition-colors"
-            >
-              <FaApple size={13} /> App Store
-            </a>
-          )}
-          {project.playStoreUrl && (
-            <a
-              href={project.playStoreUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3.5 py-1.5 text-xs font-semibold text-white hover:border-cyan-400/50 hover:bg-white/5 transition-colors"
-            >
-              <FaGooglePlay size={11} /> Google Play
-            </a>
-          )}
+        <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3 pt-1 lg:mt-auto lg:pt-7">
           <button
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-controls={detailsId}
-            className="ml-auto inline-flex items-center gap-2 py-1.5 text-xs font-semibold text-cyan-300 hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent transition-colors hover:text-white"
           >
             {open ? "Hide details" : "What I built"}
             <FaChevronDown size={10} className={`transition-transform ${open ? "rotate-180" : ""}`} />
           </button>
+          <ProjectLinks project={project} />
         </div>
       </div>
     </motion.article>
@@ -173,32 +147,30 @@ export default function Projects() {
   const visible = showAll ? projects : projects.slice(0, INITIAL_COUNT);
 
   return (
-    <section id="projects" className="relative py-24">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="relative py-28">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Selected work"
-          title="Products I have built and shipped"
-          description="Client platforms, mobile apps on the stores, and AI systems running in production. Open any card to see my part in it."
+          title="Web platforms, mobile apps and AI products."
+          description="Client platforms, apps on the stores, and AI systems running in production. Open any project to see my part in it."
         />
 
         <div className="grid gap-6 lg:grid-cols-2">
           {visible.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+            <ProjectCard key={project.id} project={project} index={index} featured={index === 0} />
           ))}
         </div>
 
         {projects.length > INITIAL_COUNT && (
-          <div className="mt-12 text-center">
+          <div className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
             <button
               onClick={() => setShowAll(!showAll)}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3 text-sm font-semibold text-white hover:border-cyan-400/50 hover:bg-white/[0.07] transition-colors"
+              className="inline-flex items-center gap-2 border-b-2 border-accent pb-1 font-semibold text-white transition-colors hover:text-accent"
             >
-              {showAll ? "Show fewer" : `Show all ${projects.length} projects`}
+              {showAll ? "Show fewer projects" : `Show all ${projects.length} projects`}
               <FaChevronDown size={11} className={`transition-transform ${showAll ? "rotate-180" : ""}`} />
             </button>
-            <p className="mt-4 text-sm text-muted">
-              15+ projects delivered in total. These are the ones I can show in detail.
-            </p>
+            <p className="text-sm text-muted">15+ projects delivered in total. These are the ones I can show in detail.</p>
           </div>
         )}
       </div>

@@ -1,0 +1,140 @@
+﻿<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="kit.css">
+<style>
+  .stage { --bg: linear-gradient(180deg, #0c0a14 0%, #120c18 62%, #1a1012 100%); }
+  .ed { background: #111216; color: #d7d9e0; height: 100%; display: flex; flex-direction: column; font-size: 10px; }
+  .med { position: relative; border-radius: 6px; height: 46px; overflow: hidden; }
+  .med span { position: absolute; right: 4px; bottom: 3px; font-size: 8px; font-weight: 700; color: #fff; background: rgba(0,0,0,.55); padding: 1px 4px; border-radius: 3px; }
+  .track { display: flex; align-items: center; gap: 3px; height: 26px; margin-bottom: 6px; }
+  .track .lab { width: 70px; flex: none; font-size: 9px; color: #8b8e9b; display: flex; align-items: center; gap: 5px; }
+  .track .lab i { width: 9px; height: 9px; border-radius: 3px; display: block; }
+  .clip { height: 100%; border-radius: 5px; position: relative; overflow: hidden; font-size: 8.5px; font-weight: 700; color: #fff; flex: none; }
+  .clip b { position: absolute; left: 6px; top: 3px; text-shadow: 0 1px 2px rgba(0,0,0,.6); z-index: 2; }
+  .film { position: absolute; inset: 0; display: flex; }
+  .film i { flex: 1; border-right: 1px solid rgba(0,0,0,.35); }
+  .wave { position: absolute; inset: 0; display: flex; align-items: center; gap: 1.5px; padding: 0 6px; }
+  .wave i { flex: none; width: 2px; border-radius: 1px; background: rgba(255,255,255,.8); }
+  .key { position: absolute; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; background: #fde68a; transform: rotate(45deg); z-index: 3; box-shadow: 0 0 0 1px rgba(0,0,0,.4); }
+</style></head>
+<body><div class="stage">
+  <!-- room lighting -->
+  <div class="glow" style="width:760px;height:640px;left:-240px;top:-120px;background:rgba(124,58,237,.5)"></div>
+  <div class="glow" style="width:640px;height:560px;left:820px;top:20px;background:rgba(249,115,22,.4)"></div>
+  <div class="glow" style="width:1000px;height:220px;left:100px;top:700px;background:rgba(124,58,237,.28);filter:blur(60px)"></div>
+  <!-- bokeh -->
+  <div class="abs" style="left:60px;top:90px;width:46px;height:46px;border-radius:50%;background:rgba(255,180,90,.32);filter:blur(3px)"></div>
+  <div class="abs" style="left:1100px;top:150px;width:64px;height:64px;border-radius:50%;background:rgba(255,140,60,.3);filter:blur(4px)"></div>
+  <div class="abs" style="left:1040px;top:60px;width:26px;height:26px;border-radius:50%;background:rgba(190,150,255,.35);filter:blur(2px)"></div>
+  <div class="abs" style="left:130px;top:230px;width:22px;height:22px;border-radius:50%;background:rgba(170,120,255,.4);filter:blur(2px)"></div>
+  <!-- desk -->
+  <div class="abs" style="left:0;right:0;top:770px;bottom:0;background:linear-gradient(180deg,#22161b,#0b0809)"></div>
+  <div class="abs" style="left:0;right:0;top:770px;height:2px;background:linear-gradient(90deg,transparent,rgba(255,170,110,.4),transparent)"></div>
+  <!-- laptop glow spill on the desk -->
+  <div class="abs" style="left:200px;right:200px;top:775px;height:90px;border-radius:50%;background:radial-gradient(ellipse at 50% 0%,rgba(150,110,255,.35),transparent 70%)"></div>
+
+  <div class="scene">
+    <div class="laptop" style="width:1040px;left:80px;top:100px;transform:rotateX(5deg);transform-origin:center bottom">
+      <div class="lid"><div class="display" style="background:#111216">
+        <div class="ed">
+          <div class="row" style="height:30px;padding:0 12px;justify-content:space-between;border-bottom:1px solid #22242c;background:#16171c">
+            <div class="row" style="gap:8px"><span style="width:16px;height:16px;border-radius:5px;background:linear-gradient(135deg,#a855f7,#f97316)"></span><b style="color:#fff;font-size:11px">Studio</b><span style="color:#6c6f7c">Product launch · 1080p · 30fps</span></div>
+            <div class="row" style="gap:6px"><span class="pill" style="background:#22242c;color:#c9cbd6">Undo</span><span class="pill" style="background:#22242c;color:#c9cbd6">EN ▾</span><span class="pill" style="background:#7c3aed;color:#fff">Export</span></div>
+          </div>
+          <div class="row" style="flex:1;align-items:stretch;min-height:0">
+            <div style="width:160px;padding:10px;border-right:1px solid #22242c">
+              <div class="row" style="justify-content:space-between;margin-bottom:8px"><b style="color:#fff">Media</b><span style="color:#8b8e9b">12</span></div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+                <div class="med" style="background:linear-gradient(135deg,#f59e0b,#be185d)"><span>0:08</span></div>
+                <div class="med" style="background:radial-gradient(circle at 60% 45%,#e2e8f0 0 14%,transparent 15%),linear-gradient(135deg,#0ea5e9,#1e3a8a)"><span>0:12</span></div>
+                <div class="med" style="background:linear-gradient(180deg,#a7f3d0 0 40%,#10b981 40%,#064e3b)"><span>0:05</span></div>
+                <div class="med" style="background:radial-gradient(circle at 30% 70%,#fde68a 0 18%,transparent 19%),linear-gradient(135deg,#a855f7,#312e81)"><span>0:10</span></div>
+                <div class="med" style="background:linear-gradient(135deg,#f97316,#7c2d12)"><span>0:06</span></div>
+                <div class="med" style="background:linear-gradient(135deg,#e2e8f0,#64748b)"><span>PNG</span></div>
+              </div>
+              <div style="margin-top:10px;font-weight:700;color:#fff">Templates</div>
+              <div class="row" style="gap:6px;margin-top:6px"><span class="pill" style="background:#22242c;color:#c9cbd6">Promo</span><span class="pill" style="background:#22242c;color:#c9cbd6">Reel 9:16</span></div>
+            </div>
+            <!-- preview: product promo frame -->
+            <div style="flex:1;padding:12px;display:flex;align-items:center;justify-content:center;background:#0b0c0f">
+              <div style="position:relative;width:100%;max-width:470px;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:radial-gradient(120% 120% at 80% 20%,#f97316 0%,#c026d3 45%,#3b0764 100%);box-shadow:0 12px 30px rgba(0,0,0,.55)">
+                <div class="abs" style="left:-40px;bottom:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.12)"></div>
+                <div class="abs" style="left:24px;top:30px;color:#fff">
+                  <div style="font-size:8px;font-weight:700;letter-spacing:.2em;opacity:.8">NEW · PLANNER APP</div>
+                  <div style="font-size:30px;font-weight:800;line-height:.95;letter-spacing:-.04em;margin-top:8px">Plan less.<br>Live more.</div>
+                  <div style="display:inline-block;margin-top:12px;background:#fff;color:#3b0764;font-size:8.5px;font-weight:800;padding:5px 10px;border-radius:999px">Try it free</div>
+                </div>
+                <!-- phone in the frame -->
+                <div class="abs" style="right:34px;top:18px;width:96px;height:196px;border-radius:18px;background:#0b0b0e;padding:4px;transform:rotate(8deg);box-shadow:0 14px 30px rgba(0,0,0,.45)">
+                  <div style="width:100%;height:100%;border-radius:14px;background:#fff;padding:14px 7px 7px;font-size:6px;color:#1f1235">
+                    <b style="font-size:8px">Today</b>
+                    <div style="margin-top:6px;height:22px;border-radius:5px;background:#f3e8ff;border-left:3px solid #a855f7"></div>
+                    <div style="margin-top:4px;height:30px;border-radius:5px;background:#ffedd5;border-left:3px solid #f97316"></div>
+                    <div style="margin-top:4px;height:18px;border-radius:5px;background:#e0f2fe;border-left:3px solid #0ea5e9"></div>
+                    <div style="margin-top:4px;height:26px;border-radius:5px;background:#dcfce7;border-left:3px solid #22c55e"></div>
+                  </div>
+                </div>
+                <div class="abs" style="left:24px;bottom:10px;right:24px;height:3px;border-radius:3px;background:rgba(255,255,255,.25)"><div style="width:38%;height:100%;border-radius:3px;background:#fff"></div></div>
+              </div>
+            </div>
+            <div style="width:140px;padding:10px;border-left:1px solid #22242c">
+              <b style="color:#fff">Properties</b>
+              <div style="color:#8b8e9b;font-size:9px;margin-top:10px">Opacity <span style="float:right;color:#d7d9e0">85%</span></div><div style="height:4px;border-radius:4px;background:#2a2c35;margin:5px 0 10px"><div style="width:85%;height:100%;border-radius:4px;background:#7c3aed"></div></div>
+              <div style="color:#8b8e9b;font-size:9px">Speed <span style="float:right;color:#d7d9e0">1.0×</span></div><div style="height:4px;border-radius:4px;background:#2a2c35;margin:5px 0 10px"><div style="width:50%;height:100%;border-radius:4px;background:#f97316"></div></div>
+              <div style="color:#8b8e9b;font-size:9px">Transition</div><div class="pill" style="background:#22242c;color:#d7d9e0;margin-top:5px">Cross fade</div>
+              <div style="color:#8b8e9b;font-size:9px;margin-top:10px">Captions</div><div class="pill" style="background:#22242c;color:#d7d9e0;margin-top:5px">Auto · 3 languages</div>
+            </div>
+          </div>
+          <div id="tl" style="height:168px;border-top:1px solid #22242c;padding:8px 12px;background:#14151a;position:relative">
+            <div class="row mono" style="justify-content:space-between;color:#6c6f7c;font-size:8.5px;margin-bottom:7px;padding-left:73px"><span>00:00</span><span>00:05</span><span>00:10</span><span>00:15</span><span>00:20</span><span>00:25</span></div>
+            <div class="track"><span class="lab"><i style="background:#64748b"></i>Captions</span><div class="clip" style="width:20%;background:#334155"><b>Meet the new…</b></div><div class="clip" style="width:28%;background:#334155"><b>Plan less. Live more.</b></div><div class="clip" style="width:18%;background:#334155"><b>Try it free</b></div></div>
+            <div class="track"><span class="lab"><i style="background:#ec4899"></i>Video</span>
+              <div class="clip" style="width:25%;background:linear-gradient(90deg,#f59e0b,#be185d)"><div class="film"><i></i><i></i><i></i><i></i><i></i></div><b>intro.mp4</b></div>
+              <div class="clip" style="width:33%;background:linear-gradient(90deg,#c026d3,#f97316)"><div class="film"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><b>app-demo.mp4</b><span class="key" style="left:30%"></span><span class="key" style="left:72%"></span></div>
+              <div class="clip" style="width:22%;background:linear-gradient(90deg,#a855f7,#312e81)"><div class="film"><i></i><i></i><i></i><i></i></div><b>outro.mp4</b></div></div>
+            <div class="track"><span class="lab"><i style="background:#8b5cf6"></i>AI voice</span><div class="clip" style="width:64%;background:#5b21b6"><div class="wave" data-n="150" data-seed="3"></div></div></div>
+            <div class="track"><span class="lab"><i style="background:#f97316"></i>Music</span><div class="clip" style="width:84%;background:#9a3412"><div class="wave" data-n="200" data-seed="9" data-flat="1"></div></div></div>
+            <div class="abs" style="left:330px;top:20px;bottom:8px;width:2px;background:#f97316;box-shadow:0 0 8px #f97316">
+              <div style="position:absolute;top:-6px;left:-22px;width:46px;padding:2px 0;border-radius:4px;background:#f97316;color:#fff;font-size:8px;font-weight:700;text-align:center" class="mono">00:07:14</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <div class="base"></div>
+    </div>
+
+    <!-- AI voice-over card -->
+    <div class="float dark" style="left:60px;top:520px;width:290px;padding:16px;transform:translateZ(60px) rotateY(10deg);z-index:6">
+      <div class="row" style="justify-content:space-between"><b style="font-size:12.5px;color:#c4b5fd">✦ AI voice-over</b><span class="pill" style="background:rgba(196,181,253,.14);color:#c4b5fd">ElevenLabs</span></div>
+      <div class="row" style="gap:10px;margin-top:12px">
+        <div class="avatar" style="width:34px;height:34px;background:linear-gradient(135deg,#a855f7,#f97316);font-size:12px">Av</div>
+        <div><div style="font-weight:700;font-size:12px">Ava · Warm narrator</div><div style="font-size:10px;color:#9a96ad">English (US) · 0:21</div></div>
+      </div>
+      <div style="margin-top:10px;font-size:10.5px;line-height:1.5;color:#d6d3e2">"Meet the new way to plan your week. Plan less, live more."</div>
+      <div class="row" style="gap:8px;margin-top:10px;height:28px"><div class="avatar" style="width:26px;height:26px;background:#7c3aed;font-size:10px">▶</div><div class="wave" data-n="56" data-seed="5" style="position:relative;padding:0;height:28px;flex:1"></div></div>
+    </div>
+
+    <!-- render card -->
+    <div class="float dark" style="left:870px;top:40px;width:270px;padding:14px 16px;transform:translateZ(60px) rotateY(-10deg);z-index:6">
+      <div class="row" style="justify-content:space-between"><b style="font-size:12px">Cloud render</b><span class="mono" style="font-size:11px;color:#fdba74">78%</span></div>
+      <div style="height:6px;border-radius:6px;background:rgba(255,255,255,.1);margin-top:10px"><div style="width:78%;height:100%;border-radius:6px;background:linear-gradient(90deg,#7c3aed,#f97316)"></div></div>
+      <div class="row" style="justify-content:space-between;margin-top:8px;font-size:10px;color:#9a96ad"><span>FFmpeg · 1080p MP4</span><span>~12s left</span></div>
+    </div>
+  </div>
+
+  <script>
+    // Natural-looking waveforms from a seeded noise
+    document.querySelectorAll(".wave[data-n]").forEach((el) => {
+      let seed = Number(el.dataset.seed);
+      const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+      const flat = el.dataset.flat;
+      const h = el.clientHeight || 26;
+      let html = "";
+      for (let i = 0; i < Number(el.dataset.n); i++) {
+        const env = flat ? 0.55 + 0.15 * Math.sin(i / 9) : 0.25 + 0.75 * Math.abs(Math.sin(i / 7) * Math.sin(i / 23 + 1));
+        const v = Math.max(0.12, Math.min(1, env * (0.55 + rnd() * 0.6)));
+        html += `<i style="height:${Math.round(v * (h - 6))}px"></i>`;
+      }
+      el.innerHTML = html;
+    });
+  </script>
+</div></body></html>

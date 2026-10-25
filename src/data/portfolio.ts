@@ -1,4 +1,4 @@
-// Portfolio data — edit this file to update the site.
+﻿// Portfolio data — edit this file to update the site.
 
 export const personalInfo = {
   name: "Ejaz Ashraf",
@@ -21,10 +21,10 @@ export const personalInfo = {
     upwork: "https://www.upwork.com/freelancers/~015906b77829bde815",
   },
   stats: [
-    { value: "4+", label: "Years building production software" },
-    { value: "15+", label: "Projects delivered" },
+    { value: "4+ years", label: "Building production software" },
+    { value: "15+ projects", label: "Shipped for clients" },
     { value: "50K+", label: "App downloads" },
-    { value: "2×", label: "Employee of the Quarter" },
+    { value: "LS-LART", label: "Current role, Senior Software Engineer" },
   ],
   heroStack: [
     "React",
@@ -96,7 +96,6 @@ export const experiences = [
   },
 ];
 
-export type ProjectKind = "web" | "mobile" | "ai" | "data";
 export type BadgeTone = "live" | "store" | "ai" | "private" | "neutral";
 
 export interface Project {
@@ -104,13 +103,10 @@ export interface Project {
   title: string;
   category: string;
   client: string;
-  kind: ProjectKind;
   badges: { label: string; tone: BadgeTone }[];
   description: string;
-  /** Cover image. Leave empty to show the generated illustration. */
+  /** Cover image, 4:3. Rendered from design/covers by `node design/render.mjs`. */
   image: string;
-  /** Extra screenshots, shown as a gallery under the cover on hover. */
-  gallery?: string[];
   technologies: string[];
   liveUrl?: string;
   playStoreUrl?: string;
@@ -124,7 +120,6 @@ export const projects: Project[] = [
     title: "ALA Portals & Mobile App",
     category: "Workforce platform",
     client: "Agri Labour Australia",
-    kind: "web",
     badges: [
       { label: "Live", tone: "live" },
       { label: "App Store", tone: "store" },
@@ -132,7 +127,7 @@ export const projects: Project[] = [
     ],
     description:
       "Web portal and mobile app for one of Australia's largest agricultural labour-hire companies. Manages the candidate lifecycle, job processing, payroll documents and compliance for thousands of field workers.",
-    image: "/projects/ala-portal/cover.png",
+    image: "/projects/ala-portal.webp",
     technologies: ["Angular", "React Native", "Expo", "TypeScript", "Azure B2C", "RxJS", "TanStack Query", "DocuSign API", "Azure Blob Storage"],
     liveUrl: "https://staff.agrilabour.com.au",
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.ejaz.ashraf.agrilabouraustralia",
@@ -148,14 +143,13 @@ export const projects: Project[] = [
     title: "APR System",
     category: "AI legal SaaS",
     client: "Kcube.ai",
-    kind: "ai",
     badges: [
       { label: "AI · RAG", tone: "ai" },
       { label: "SaaS", tone: "neutral" },
     ],
     description:
       "Legal case-management SaaS with a RAG-based AI chat over case documents, Stripe subscription billing, digital document signing and multi-language support.",
-    image: "/projects/apr-system/cover.png",
+    image: "/projects/apr-system.webp",
     technologies: ["React", "TypeScript", "FastAPI", "PostgreSQL", "RAG", "Pinecone", "Stripe", "TanStack Query"],
     highlights: [
       "React frontend and FastAPI backend with an AI chat that retrieves from legal documents before answering",
@@ -168,7 +162,6 @@ export const projects: Project[] = [
     title: "AI Analytics Assistant",
     category: "LLM agent",
     client: "LS-LART",
-    kind: "ai",
     badges: [
       { label: "AI agent", tone: "ai" },
       { label: "In production", tone: "live" },
@@ -176,7 +169,7 @@ export const projects: Project[] = [
     ],
     description:
       "A service that lets non-technical users ask questions about their business data in plain English and get answers back from the database.",
-    image: "",
+    image: "/projects/ai-analytics.webp",
     technologies: ["Python", "FastAPI", "OpenAI", "Pinecone", "Pandas", "SQL", "JWT"],
     highlights: [
       "LLM tool-calling agent with vector-based long-term memory and conversation persistence",
@@ -189,14 +182,13 @@ export const projects: Project[] = [
     title: "Hailo — Event Management Platform",
     category: "Operations SaaS",
     client: "Kcube.ai",
-    kind: "web",
     badges: [
       { label: "Enterprise", tone: "neutral" },
       { label: "Real-time", tone: "neutral" },
     ],
     description:
       "Enterprise SaaS for end-to-end event operations: projects, teams, finance, procurement, HR and leave, and payroll, with real-time collaboration across multi-country teams.",
-    image: "",
+    image: "/projects/hailo.webp",
     technologies: ["React", "NestJS", "TypeScript", "PostgreSQL", "TypeORM", "Socket.IO", "Redis", "BullMQ", "Azure MSAL", "AWS"],
     highlights: [
       "NestJS + TypeORM + PostgreSQL backend with granular role-based access control, JWT auth and TOTP two-factor authentication",
@@ -209,14 +201,13 @@ export const projects: Project[] = [
     title: "CoreMemories AI",
     category: "Consumer AI app",
     client: "Kcube.ai",
-    kind: "mobile",
     badges: [
       { label: "Google Play", tone: "store" },
       { label: "AI", tone: "ai" },
     ],
     description:
       "AI-powered personal memory platform that captures, organises and resurfaces memories through prompts and personality-driven interactions.",
-    image: "/projects/core-memories/cover.png",
+    image: "/projects/core-memories.webp",
     technologies: ["React", "React Native", "TypeScript", "TanStack Query", "Tailwind CSS", "PostHog", "Apple Sign-In"],
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.kcube.corememories.core_memories",
     highlights: [
@@ -230,14 +221,13 @@ export const projects: Project[] = [
     title: "Print Job Processing Platform",
     category: "Admin platform",
     client: "LS-LART",
-    kind: "web",
     badges: [
       { label: "In production", tone: "live" },
       { label: "Client work", tone: "private" },
     ],
     description:
       "Admin platform that manages print jobs from intake through artwork proofing, multi-stage approvals and production.",
-    image: "",
+    image: "/projects/print-jobs.webp",
     technologies: ["Angular", "TypeScript", "Firestore", "Cloud Functions", "Node.js", "SendGrid"],
     highlights: [
       "Proofing workflows, role-based approval chains and automated client notifications",
@@ -250,14 +240,13 @@ export const projects: Project[] = [
     title: "Heides Patient Portal",
     category: "Healthcare",
     client: "Kcube.ai",
-    kind: "mobile",
     badges: [
       { label: "Web + mobile", tone: "neutral" },
       { label: "Healthcare", tone: "neutral" },
     ],
     description:
       "Healthcare platform for patient management, appointments, prescriptions, document handling and secure messaging between patients and providers.",
-    image: "",
+    image: "/projects/heides.webp",
     technologies: ["React", "React Native", "Expo", "TypeScript", "FastAPI", "PostgreSQL", "pgvector", "Sentry"],
     highlights: [
       "React web frontend with TanStack Router and Chakra UI for the patient dashboard and appointments",
@@ -270,14 +259,13 @@ export const projects: Project[] = [
     title: "Video Editing Tool",
     category: "Media SaaS",
     client: "Kcube.ai",
-    kind: "web",
     badges: [
       { label: "SaaS", tone: "neutral" },
       { label: "AI voice", tone: "ai" },
     ],
     description:
       "Cloud video editor with in-browser composition on Remotion, cloud processing with FFmpeg, multi-language support and an AI chat for user help.",
-    image: "",
+    image: "/projects/video-editor.webp",
     technologies: ["React", "TypeScript", "FastAPI", "Remotion", "FFmpeg", "Stripe", "Azure Blob Storage", "ElevenLabs"],
     highlights: [
       "React frontend with Remotion for in-browser composition and timeline management",
@@ -290,14 +278,13 @@ export const projects: Project[] = [
     title: "Data Collection & Analytics Platform",
     category: "Analytics",
     client: "LS-LART",
-    kind: "data",
     badges: [
       { label: "In production", tone: "live" },
       { label: "Client work", tone: "private" },
     ],
     description:
       "Campaign, location and vendor APIs with interactive dashboards, geospatial reporting and scheduled jobs, on a large long-running codebase.",
-    image: "",
+    image: "/projects/analytics-platform.webp",
     technologies: ["PHP", "MySQL", "JavaScript", "ApexCharts", "Leaflet"],
     highlights: [
       "Interactive dashboards and map-based reporting for campaign performance",
@@ -310,11 +297,10 @@ export const projects: Project[] = [
     title: "Image Upscaler",
     category: "AI web app",
     client: "Kcube.ai",
-    kind: "ai",
     badges: [{ label: "AI", tone: "ai" }],
     description:
       "AI image-upscaling web application with user accounts, two-factor security and a clean interface built on shadcn components.",
-    image: "",
+    image: "/projects/image-upscaler.webp",
     technologies: ["Next.js", "React", "TypeScript", "FastAPI", "PostgreSQL", "shadcn/ui", "SendGrid"],
     highlights: [
       "Next.js frontend with shadcn/ui and Tailwind CSS",
@@ -327,14 +313,13 @@ export const projects: Project[] = [
     title: "AI SaaS Boilerplate",
     category: "Starter kit",
     client: "Kcube.ai",
-    kind: "web",
     badges: [
       { label: "AI", tone: "ai" },
       { label: "Docker", tone: "neutral" },
     ],
     description:
       "Production-ready full-stack starter for AI SaaS products: OpenAI chat, Stripe subscriptions, an admin dashboard and multi-provider OAuth.",
-    image: "",
+    image: "/projects/ai-saas-boilerplate.webp",
     technologies: ["React", "TypeScript", "FastAPI", "PostgreSQL", "OpenAI", "Stripe", "Tailwind CSS", "Docker"],
     highlights: [
       "React frontend with dynamic theming and role-based access control",
@@ -381,10 +366,10 @@ export const services = [
 ];
 
 export const process = [
-  { step: "Talk", detail: "A short call about what you need and who will use it." },
-  { step: "Plan", detail: "A written scope, timeline and quote before any work starts." },
-  { step: "Build", detail: "Regular updates and working previews you can click through." },
-  { step: "Launch", detail: "Deployment, handover and support after go-live." },
+  { step: "Talk", detail: "A short call about what you need and who will use it.", deliverable: "Clear requirements" },
+  { step: "Plan", detail: "A written scope, timeline and quote before any work starts.", deliverable: "Scope, timeline & quote" },
+  { step: "Build", detail: "Regular updates and working previews you can click through.", deliverable: "Clickable previews" },
+  { step: "Launch", detail: "Deployment, handover and support after go-live.", deliverable: "Live product & handover" },
 ];
 
 export const faqs = [

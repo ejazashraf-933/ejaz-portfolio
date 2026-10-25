@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Background from "@/components/Background";
 
-const jakarta = Plus_Jakarta_Sans({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-jakarta",
-  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-geist",
 });
 
-const mono = JetBrains_Mono({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-jetbrains",
-  weight: ["400", "500", "600"],
+  variable: "--font-geist-mono",
 });
 
 const description =
@@ -39,6 +37,7 @@ export const metadata: Metadata = {
     description,
     type: "website",
     url: "/",
+    images: [{ url: "/projects/ala-portal.webp", width: 2400, height: 1800 }],
   },
 };
 
@@ -48,8 +47,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${jakarta.variable} ${mono.variable} scroll-smooth`}>
-      <body className="font-sans antialiased">
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+      {/* Browser extensions (e.g. Kapture) add classes to <body> before React loads */}
+      <body className="font-sans antialiased" suppressHydrationWarning>
         <Background />
         {children}
       </body>

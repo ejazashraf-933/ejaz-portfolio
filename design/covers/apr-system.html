@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="kit.css">
+<style>
+  .stage { --bg: radial-gradient(100% 90% at 35% 25%, #3a2614 0%, #1a1009 45%, #080504 100%); }
+  :root { --gold: #c8955a; --gold-2: #e0b47c; }
+  .side a { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 8px; font-size: 11px; color: #4b4f5c; }
+  .side a i { width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid currentColor; opacity: .7; }
+  .side a.on { background: #f3f1ee; color: #111; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; font-size: 10.5px; }
+  th { text-align: left; color: #8a8f9c; font-weight: 500; padding: 8px 12px; border-bottom: 1px solid #eef0f3; }
+  td { padding: 9px 12px; border-bottom: 1px solid #f2f3f5; color: #1d2230; }
+  .st { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 9.5px; font-weight: 600; }
+  .an { background: #fdf3e3; color: #a4650f; } .pay { background: #fdf3e3; color: #a4650f; } .prog { background: #fde9f1; color: #b8336a; } .done { background: #e8f6ee; color: #1c8a55; }
+  .cite { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border-radius: 7px; background: rgba(200,149,90,.14); color: #f0c992; font-size: 9.5px; font-weight: 600; }
+</style></head>
+<body><div class="stage">
+  <div class="wall-grid"></div>
+  <div class="glow" style="width:820px;height:520px;left:80px;top:-80px;background:rgba(224,160,90,.33)"></div>
+  <div class="glow" style="width:500px;height:400px;left:760px;top:420px;background:rgba(200,120,60,.22)"></div>
+
+  <div class="scene">
+    <div class="laptop" style="width:820px;left:40px;top:140px;transform:rotateY(12deg) rotateX(3deg);transform-origin:left center">
+      <div class="lid"><div class="display">
+        <div class="row" style="height:46px;justify-content:space-between;padding:0 18px;border-bottom:1px solid #eef0f3">
+          <div class="row" style="gap:8px"><div style="width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--gold-2),#9a6a36)"></div><b style="font-size:13px;letter-spacing:.06em">APR</b><span class="muted" style="font-size:10px">Patent case manager</span></div>
+          <div class="row" style="gap:12px"><span class="pill" style="background:linear-gradient(135deg,var(--gold-2),#a9743e);color:#fff;padding:6px 12px">Book a call</span><span style="font-size:10px;font-weight:600">EN ▾</span><div class="avatar" style="width:26px;height:26px;background:#f6c94c;color:#5b4300;font-size:11px">R</div></div>
+        </div>
+        <div class="row" style="height:calc(100% - 46px);align-items:stretch">
+          <div class="side col" style="width:140px;padding:12px 8px;gap:2px;border-right:1px solid #eef0f3">
+            <a class="on"><i></i>Dashboard</a><a><i></i>My cases</a><a><i></i>AI assistant</a><a><i></i>Documents</a><a><i></i>Billing</a><a><i></i>Settings</a>
+          </div>
+          <div style="flex:1;padding:16px 18px;background:#fcfcfb">
+            <div style="font-weight:800;font-size:17px">Welcome back, Rachel</div>
+            <div class="muted" style="font-size:10.5px;margin-top:2px">Track and manage your patent matters.</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px">
+              <div style="border:1px solid #eceef1;border-radius:10px;padding:11px;background:#fff"><div style="font-size:10px;font-weight:600">Total cases</div><div style="font-size:22px;font-weight:800;margin-top:2px">22</div><div class="muted" style="font-size:9.5px">All submitted matters</div></div>
+              <div style="border:1px solid #eceef1;border-radius:10px;padding:11px;background:#fff"><div style="font-size:10px;font-weight:600">Active cases</div><div style="font-size:22px;font-weight:800;margin-top:2px">14</div><div class="muted" style="font-size:9.5px">Under review or in progress</div></div>
+              <div style="border:1px solid #eceef1;border-radius:10px;padding:11px;background:#fff"><div style="font-size:10px;font-weight:600">Plan</div><div style="font-size:22px;font-weight:800;margin-top:2px;color:#a9743e">Pro</div><div class="muted" style="font-size:9.5px">Renews 1 Nov · Stripe</div></div>
+            </div>
+            <div style="border:1px solid #eceef1;border-radius:10px;margin-top:12px;background:#fff;overflow:hidden">
+              <div class="row" style="justify-content:space-between;padding:10px 12px"><b style="font-size:12px">Recent cases</b><span class="pill" style="background:linear-gradient(135deg,var(--gold-2),#a9743e);color:#fff;padding:5px 11px">+ New case</span></div>
+              <table>
+                <tr><th>Case ID</th><th>Type</th><th>Patent no.</th><th>Status</th><th>Updated</th></tr>
+                <tr><td>PD-5</td><td>Defense</td><td>US 11,284,507</td><td><span class="st an">Pending (Analysis)</span></td><td>Mar 31</td></tr>
+                <tr><td>PR-17</td><td>Prosecution</td><td>US 10,937,215</td><td><span class="st prog">In progress</span></td><td>Mar 31</td></tr>
+                <tr><td>PR-16</td><td>Prosecution</td><td>US 11,402,688</td><td><span class="st pay">Pending (Payment)</span></td><td>Mar 28</td></tr>
+                <tr><td>PR-15</td><td>Prosecution</td><td>US 10,615,042</td><td><span class="st done">Completed</span></td><td>Mar 12</td></tr>
+                <tr><td>PR-14</td><td>Prosecution</td><td>US 11,058,931</td><td><span class="st prog">In progress</span></td><td>Mar 11</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <div class="base"></div>
+    </div>
+
+    <!-- AI chat over case documents -->
+    <div class="float dark" style="left:770px;top:210px;width:390px;padding:18px;transform:rotateY(-10deg);z-index:5">
+      <div class="row" style="gap:10px">
+        <div class="avatar" style="width:30px;height:30px;background:linear-gradient(135deg,var(--gold-2),#8a5a2a);font-size:13px">✦</div>
+        <div><div style="font-weight:700;font-size:13px">Case assistant</div><div style="font-size:10px;color:#9ea3b0">PR-17 · 6 documents indexed</div></div>
+        <span class="pill" style="margin-left:auto;background:rgba(80,200,140,.14);color:#7fe0b0">RAG</span>
+      </div>
+      <div style="margin-top:14px;margin-left:auto;width:fit-content;max-width:85%;background:#2a2c36;padding:9px 12px;border-radius:12px 12px 4px 12px;font-size:11px;line-height:1.45">What did the examiner reject in the last office action?</div>
+      <div style="margin-top:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);padding:12px;border-radius:12px;font-size:11px;line-height:1.6;color:#d9dbe2">
+        Claims 1–4 were rejected under <b style="color:#fff">§103 as obvious</b> over two prior patents. The examiner accepted claims 5–9 and suggested narrowing claim 1 to the sensor arrangement.
+        <div class="row" style="gap:6px;margin-top:10px;flex-wrap:wrap"><span class="cite">▤ Office action.pdf · p.4</span><span class="cite">▤ Claims v2.docx</span></div>
+      </div>
+      <div class="row" style="margin-top:12px;height:38px;border-radius:10px;background:#0f1016;border:1px solid #2a2c36;padding:0 12px;justify-content:space-between;font-size:10.5px;color:#7d818e">Ask about this case…<span class="avatar" style="width:24px;height:24px;background:var(--gold);font-size:11px">↑</span></div>
+    </div>
+
+    <!-- Signing card -->
+    <div class="float" style="left:820px;top:640px;width:300px;padding:14px;z-index:6">
+      <div class="row" style="gap:10px">
+        <div class="avatar" style="width:32px;height:32px;background:#e8f6ee;color:#1c8a55;font-size:14px">✓</div>
+        <div><div style="font-weight:700;font-size:12px">Engagement letter signed</div><div class="muted" style="font-size:10px">PDF generated · 2 signers</div></div>
+      </div>
+    </div>
+  </div>
+</div></body></html>
